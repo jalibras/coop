@@ -12,7 +12,7 @@ class ProblemAdmin(admin.ModelAdmin):
     list_filter = ('grade','steepness')
     list_display = ('grade','hold_colour','steepness','picture_1')
 
-    readonly_fields=('pictures',)
+    readonly_fields=('pictures','videos')
     
     def pictures(self,obj):
         raw_list = [
@@ -31,6 +31,11 @@ class ProblemAdmin(admin.ModelAdmin):
             ht += "<p><img src='{url}' width='100%'/>".format(url=im_url)
         return format_html(ht)
 
-
+    def videos(self,obj): # THIS NEEDS TO BE FIXED
+        try:
+            raw = ("{pref}"+obj.video_snippets+"{postf}").format(pref='<p>',list_separator='<p>',postf='')
+            return format_html(raw)
+        except:
+            return format_html(obj.video_snippets)
 
 admin.site.register(Problem,ProblemAdmin)
