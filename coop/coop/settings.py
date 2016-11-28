@@ -25,7 +25,7 @@ SECRET_KEY = 'z8opvv_h4s!t=m%@ip*reg@x9%_snhhy=229!gsi&6)4k0)qd='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jalibras.pythonanywhere.com']
 
 
 # Application definition
@@ -126,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/var/www/coop_static'
 
 
 
