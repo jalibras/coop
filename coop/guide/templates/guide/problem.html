@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+
+
+
+<dl>
+    <dt>Holds</dt>
+    <dd>{{problem.holds}}</dd>
+    <dt>Description</dt>
+    <dd>{{problem.description}}</dd>
+    <dt>Grade</dt> 
+    <dd>{{problem.grade}}</dd>
+</dl>
+
+<h3>Pictures</h3>
+
+{{ problem.pictures }}
+
+<h3>Videos</h3>
+
+    {{problem.videos }}
+
+
+{% endblock %}

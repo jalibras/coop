@@ -10,7 +10,7 @@ from guide.models import Problem
 
 class ProblemAdmin(admin.ModelAdmin):
     list_filter = ('grade','steepness')
-    list_display = ('grade','hold_colour','steepness','picture_1')
+    list_display = ('grade','holds','steepness','picture_1')
 
     readonly_fields=('pictures','videos')
     
