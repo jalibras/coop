@@ -39,6 +39,8 @@ class Problem(models.Model):
             ('na','not applicable'),
             )
     steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
+    def steepness_func(self):
+        return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
     holds=models.CharField(max_length=300,null=True,blank=True)
     description=models.TextField(blank=True,null=True)
     picture_1=models.FileField(upload_to='uploads',blank=True,null=True)

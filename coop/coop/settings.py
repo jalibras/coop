@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['jalibras.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap_admin',
+    #'bootstrap_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
+#BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
 
 WSGI_APPLICATION = 'coop.wsgi.application'
 
