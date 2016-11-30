@@ -14,8 +14,9 @@ def index(request):
     """
     view for homepage
     """
+    prob_list = Problem.objects.all()
     return render(request,'guide/index.html',{
-        'maincontent':'Placeholder for the problem guide',
+        'prob_list':prob_list,
         })
 
 
