@@ -14,11 +14,21 @@ def index(request):
     """
     view for homepage
     """
-    area_id=int(request.GET.get('areaid',default=1))
-    area = Area.objects.get(id=area_id)
-    prob_list = BaseProblem.objects.filter(area=area)
+    arlist = Area.objects.all()
     return render(request,'guide/index.html',{
+        'arlist':arlist,
+        })
+
+def area(request,areaid=1):
+    """
+    view for homepage
+    """
+    area = Area.objects.get(id=areaid)
+    prob_list = BaseProblem.objects.filter(area=area)
+    arlist = Area.objects.all()
+    return render(request,'guide/area.html',{
         'area':area,
+        'arlist':arlist,
         'prob_list':prob_list,
         })
 
@@ -28,18 +38,9 @@ def problem(request,id):
     view a problem
     """
     
-    # we need to instantiate the correct subclass of BaseProblem
-    # so that we have correct methods available in the template
-    subcls_list = BaseProblem.__subclasses__()
-
-    for cls in subcls_list:
-        try:
-            problem = cls.objects.get(id=int(id))
-        
-            break
-        except:
-            pass
-    else:
+    try:
+        problem = BaseProblem.objects.get(id = int(id))
+    except:
         raise Http404
 
     return render(request,'guide/problem.html',{

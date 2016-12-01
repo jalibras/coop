@@ -1,0 +1,52 @@
+
+
+{% extends "base.html" %}
+
+{% block navitems %}
+
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Areas <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        {% for ar in arlist %}
+        <li><a href="{% url "guide:area" ar.id%}">{{ar.name}}</a></li>
+        {%endfor%}
+    </ul>
+    </li>
+
+
+
+{% endblock %}
+
+
+
+{% block main %}
+
+
+<div class="container">
+    <h3>{{area.name}}</h3>
+    <div class="panel-group">
+        {% for prob in prob_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <strong>{{ prob.grade }}</strong>, 
+                    {{prob.steepness_func}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
+                </h3>
+                <a data-toggle="collapse" href="#collapse{{prob.id}}" class="toggle-description">Description</a>
+            </div>
+            <div id="collapse{{prob.id}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>{{prob.description}}
+                    <p><a href="{% url "guide:problem" id=prob.id%}">Full details with pictures and videos</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+

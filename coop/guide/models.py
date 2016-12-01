@@ -7,8 +7,17 @@ from django.utils.html import format_html
 
 class Area(models.Model):
     name=models.CharField(max_length=300,null=True,blank=True)
+    description=models.TextField(null=True,blank=True)
     area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
     area_map_imagemap_snippet=models.TextField(null=True,blank=True)
+    def video_count(self):
+        ct = 0
+        for p in self.baseproblem_set.all():
+            if p.videos():
+                ct+=1
+
+        return ct
+
 
     def __str__(self):
         return self.name
@@ -64,6 +73,8 @@ class BaseProblem(models.Model):
                 self.picture_3,
                 ]
         pic_list = list(filter(lambda x:x.name!='',raw_list))
+        if len(pic_list)==0:
+            return False
 
         ht=""
         for pic in pic_list:
@@ -75,6 +86,8 @@ class BaseProblem(models.Model):
         return format_html(ht)
 
     def videos(self): # THIS NEEDS TO BE FIXED
+        if self.video_snippets=='':
+            return False
         try:
             raw = ("{pref}"+self.video_snippets+"{postf}").format(pref='<p>',list_separator='<p>',postf='')
             return format_html(raw)

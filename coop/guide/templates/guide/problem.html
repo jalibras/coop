@@ -5,27 +5,61 @@
 
 
 <h3>Problem Info</h3>
-
+{% if problem.artificialproblem %}
 <dl>
     <dt>Holds</dt>
-    <dd>{{problem.holds}}</dd>
+    <dd>{{problem.artificialproblem.holds}}</dd>
     <dt>Description</dt>
     <dd>{{problem.description}}</dd>
     <dt>Grade</dt> 
     <dd>{{problem.grade}}</dd>
     <dt>Date</dt>
-    <dd>{{problem.date}}</dd>
+    <dd>{{problem.artificialproblem.date}}</dd>
     <dt>Setter</dt>
-    <dd>{{problem.setter}}</dd>
+    <dd>{{problem.artificialproblem.setter}}</dd>
 </dl>
+{% elif problem.naturalproblem %}
+<dl>
+    <dt>Description</dt>
+    <dd>{{problem.description}}</dd>
+    <dt>Grade</dt> 
+    <dd>{{problem.grade}}</dd>
+    <dt>Rock Type</dt>
+    <dd>{{problem.naturalproblem.rock_type}}</dd>
+    <dt>First Ascensionist</dt>
+    <dd>{{problem.naturalproblem.first_ascensionist}}</dd>
+</dl>
+{%else %}
+{{ problem.description }}
+{% endif %}
+
+
 
 <h3>Pictures</h3>
 
+{% if problem.pictures %}
+
 {{ problem.pictures }}
+
+{% else %}
+
+No pictures have been posted for this problem
+
+{% endif %}
+
 
 <h3>Videos</h3>
 
-    {{problem.videos }}
+{% if problem.videos %}
+
+{{ problem.videos }}
+
+{% else %}
+
+No videos have been posted for this problem
+
+{% endif %}
+
 
 
 {% endblock %}
