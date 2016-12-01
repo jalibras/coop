@@ -27,10 +27,15 @@ def problem(request,id):
     """
     view a problem
     """
+    
+    # we need to instantiate the correct subclass of BaseProblem
+    # so that we have correct methods available in the template
     subcls_list = BaseProblem.__subclasses__()
+
     for cls in subcls_list:
         try:
             problem = cls.objects.get(id=int(id))
+        
             break
         except:
             pass
