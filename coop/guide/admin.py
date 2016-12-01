@@ -3,12 +3,15 @@ from django.contrib import admin
 from django.conf import settings
 from django.utils.html import format_html
 
-from guide.models import Problem
+from guide.models import ArtificialProblem,NaturalProblem,Area
 
 
 # Register your models here.
 
-class ProblemAdmin(admin.ModelAdmin):
+class AreaAdmin(admin.ModelAdmin):
+    pass
+
+class ArtificialProblemAdmin(admin.ModelAdmin):
     list_filter = ('grade','steepness')
     list_display = ('grade','holds','steepness','picture_1')
 
@@ -38,4 +41,10 @@ class ProblemAdmin(admin.ModelAdmin):
         except:
             return format_html(obj.video_snippets)
 
-admin.site.register(Problem,ProblemAdmin)
+class NaturalProblemAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(ArtificialProblem,ArtificialProblemAdmin)
+admin.site.register(NaturalProblem,NaturalProblemAdmin)
+admin.site.register(Area,AreaAdmin)

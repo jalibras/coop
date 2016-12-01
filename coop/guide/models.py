@@ -5,9 +5,16 @@ from django.utils.html import format_html
 # Create your models here.
 
 
-class Problem(models.Model):
-
+class Area(models.Model):
     name=models.CharField(max_length=300,null=True,blank=True)
+    area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
+    area_map_imagemap_snippet=models.TextField(null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+
+class BaseProblem(models.Model):
+    area=models.ForeignKey('Area',null=True,blank=True)
     FONT_GRADES=(
             ('?','?'),
             ('3','3'),
@@ -41,17 +48,15 @@ class Problem(models.Model):
     steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
     def steepness_func(self):
         return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
-    holds=models.CharField(max_length=300,null=True,blank=True)
     description=models.TextField(blank=True,null=True)
     picture_1=models.FileField(upload_to='uploads',blank=True,null=True)
     picture_2=models.FileField(upload_to='uploads',blank=True,null=True)
     picture_3=models.FileField(upload_to='uploads',blank=True,null=True)
     video_snippets=models.CharField(max_length=1000,default='',null=True,blank=True)
     comments=models.TextField(blank=True,null=True)
-    date=models.DateField(null=True,blank=True)
-    setter=models.CharField(max_length=300,null=True,blank=True)
     exists=models.BooleanField(default=True)
 
+# methods for embedding media
     def pictures(self):
         raw_list = [
                 self.picture_1,
@@ -77,4 +82,12 @@ class Problem(models.Model):
             return format_html(self.video_snippets)
 
 
+class ArtificialProblem(BaseProblem):
+    date=models.DateField(null=True,blank=True)
+    holds=models.CharField(max_length=300,null=True,blank=True)
+    setter=models.CharField(max_length=300,null=True,blank=True)
+
+class NaturalProblem(BaseProblem):
+    rock_type=models.CharField(max_length=50,null=True,blank=True)
+    first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
 
