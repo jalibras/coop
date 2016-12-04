@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^guide/', include('guide.urls',namespace="guide")),
     url(r'^home/', include('homepage.urls',namespace="homepage")),
+    url(r'^members/', include('members.urls',namespace="members")),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
