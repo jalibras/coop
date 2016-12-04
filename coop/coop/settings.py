@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'guide',
     'homepage',
     'members',
+    'posts',
 ]
 
 MIDDLEWARE = [
@@ -144,4 +145,4 @@ MEDIA_ROOT= os.path.join(BASE_DIR,'media')
 
 # custom User model
 
-#AUTH_USER_MODEL = 'members.CoopUser'
+AUTH_USER_MODEL = 'members.User'
