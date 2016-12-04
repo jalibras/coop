@@ -11,12 +11,8 @@ class Area(models.Model):
     area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
     area_map_imagemap_snippet=models.TextField(null=True,blank=True)
     def video_count(self):
-        ct = 0
-        for p in self.baseproblem_set.all():
-            if p.videos():
-                ct+=1
-
-        return ct
+# TO BE IMPLEMENTED
+        return False
 
 
     def __str__(self):
@@ -58,41 +54,25 @@ class BaseProblem(models.Model):
     def steepness_func(self):
         return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
     description=models.TextField(blank=True,null=True)
-    picture_1=models.FileField(upload_to='uploads',blank=True,null=True)
-    picture_2=models.FileField(upload_to='uploads',blank=True,null=True)
-    picture_3=models.FileField(upload_to='uploads',blank=True,null=True)
-    video_snippets=models.CharField(max_length=1000,default='',null=True,blank=True)
-    comments=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
 
 # methods for embedding media
     def pictures(self):
-        raw_list = [
-                self.picture_1,
-                self.picture_2,
-                self.picture_3,
-                ]
-        pic_list = list(filter(lambda x:x.name!='',raw_list))
+        pic_list = self.problemimage_set.all()
         if len(pic_list)==0:
             return False
 
         ht=""
         for pic in pic_list:
             try:
-                im_url = settings.MEDIA_URL+pic.name
+                im_url = settings.MEDIA_URL+pic.image_file.name
             except:
                 return 'upload a picture'
             ht += "<p><img src='{url}' width='100%'/>".format(url=im_url)
         return format_html(ht)
 
     def videos(self): # THIS NEEDS TO BE FIXED
-        if self.video_snippets=='':
-            return False
-        try:
-            raw = ("{pref}"+self.video_snippets+"{postf}").format(pref='<p>',list_separator='<p>',postf='')
-            return format_html(raw)
-        except:
-            return format_html(self.video_snippets)
+        return False
 
 
 class ArtificialProblem(BaseProblem):
@@ -103,4 +83,9 @@ class ArtificialProblem(BaseProblem):
 class NaturalProblem(BaseProblem):
     rock_type=models.CharField(max_length=50,null=True,blank=True)
     first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
+
+
+class  ProblemImage(models.Model):
+    problem = models.ForeignKey(BaseProblem)
+    image_file = models.FileField(upload_to='uploads',blank=True,null=True)
 
