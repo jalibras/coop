@@ -47,16 +47,80 @@ No pictures have been posted for this problem
 
 {% endif %}
 
+<h3>Comments</h3>
+
+{% if problem.comment_set.all.count > 0 %}
+
+{% for v in problem.comment_set.all %}
+<p>{{v.text | safe }}
+
+
+{% endfor %}
+
+{% else %}
+
+No comments
+
+{% endif %}
+
+{% if request.user.member %}
+
+<p>Make a comment
+
+<form method="post">
+
+    {% csrf_token %}
+
+{{ commentform }}
+<p>
+<input type="hidden" name="post-type" value="comment"/>
+<input type="submit" class="btn btn-primary" value="Post"/>
+
+
+</form>
+
+{% else %}
+
+Log in to comment on this problem.
+
+{% endif %}
+
+
 
 <h3>Videos</h3>
 
-{% if problem.videos %}
+{% if problem.problemvideo_set.all.count > 0 %}
 
-{{ problem.videos }}
+{% for v in problem.problemvideo_set.all %}
+<p>{{v.embed_code | safe }}
+
+
+{% endfor %}
 
 {% else %}
 
 No videos have been posted for this problem
+
+{% endif %}
+
+{% if request.user.member %}
+
+<p> To post a video for this problem, copy/paste the embed code into the form below
+
+<form method="post">
+
+    {% csrf_token %}
+
+{{ videoform }}
+<p>
+<input type="hidden" name="post-type" value="video"/>
+<input type="submit" class="btn btn-primary" value="Post"/>
+
+</form>
+
+{% else %}
+
+Log in to post a video for this problem.
 
 {% endif %}
 
