@@ -52,7 +52,7 @@ No pictures have been posted for this problem
 {% if problem.comment_set.all.count > 0 %}
 
 {% for v in problem.comment_set.all %}
-<p>{{v.text | safe }}
+<p><strong>{{v.member.user.get_full_name}}:</strong> {{v.text }}
 
 
 {% endfor %}
@@ -65,13 +65,12 @@ No comments
 
 {% if request.user.member %}
 
-<p>Make a comment
 
 <form method="post">
 
     {% csrf_token %}
 
-{{ commentform }}
+{{ commentform.text }}
 <p>
 <input type="hidden" name="post-type" value="comment"/>
 <input type="submit" class="btn btn-primary" value="Post"/>
@@ -81,7 +80,7 @@ No comments
 
 {% else %}
 
-Log in to comment on this problem.
+<p>Log in to comment on this problem.
 
 {% endif %}
 
@@ -92,6 +91,8 @@ Log in to comment on this problem.
 {% if problem.problemvideo_set.all.count > 0 %}
 
 {% for v in problem.problemvideo_set.all %}
+
+<p>Posted at 
 <p>{{v.embed_code | safe }}
 
 
@@ -111,7 +112,8 @@ No videos have been posted for this problem
 
     {% csrf_token %}
 
-{{ videoform }}
+{{ videoform.embed_code }}
+<p>
 <p>
 <input type="hidden" name="post-type" value="video"/>
 <input type="submit" class="btn btn-primary" value="Post"/>
@@ -120,7 +122,7 @@ No videos have been posted for this problem
 
 {% else %}
 
-Log in to post a video for this problem.
+<p>Log in to post a video for this problem.
 
 {% endif %}
 
