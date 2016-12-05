@@ -2,6 +2,10 @@ from django.db import models
 from django.conf import settings
 from django.utils.html import format_html
 
+
+from members.models import Member
+
+
 # Create your models here.
 
 
@@ -11,8 +15,7 @@ class Area(models.Model):
     area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
     area_map_imagemap_snippet=models.TextField(null=True,blank=True)
     def video_count(self):
-# TO BE IMPLEMENTED
-        return False
+        return ProblemVideo.objects.filter(problem__area=self).count()
 
 
     def __str__(self):
@@ -71,8 +74,6 @@ class BaseProblem(models.Model):
             ht += "<p><img src='{url}' width='100%'/>".format(url=im_url)
         return format_html(ht)
 
-    def videos(self): # THIS NEEDS TO BE FIXED
-        return False
 
 
 class ArtificialProblem(BaseProblem):
@@ -85,7 +86,16 @@ class NaturalProblem(BaseProblem):
     first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
 
 
-class  ProblemImage(models.Model):
+class ProblemImage(models.Model):
     problem = models.ForeignKey(BaseProblem)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
 
+class Comment(models.Model):
+    text = models.TextField()
+    problem = models.ForeignKey(BaseProblem,null=True,blank=True)
+    member = models.ForeignKey(Member,null=True,blank=True)
+ 
+class ProblemVideo(models.Model):
+    embed_code = models.CharField(max_length=1000)
+    problem = models.ForeignKey(BaseProblem,null=True,blank=True)
+    member = models.ForeignKey(Member,null=True,blank=True) 
