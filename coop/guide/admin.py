@@ -3,10 +3,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.utils.html import format_html
 
-from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo
+from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
 
 
 # Register your models here.
+
+class CommentInline(admin.StackedInline):
+    model = Comment
 
 class ProblemImageInline(admin.StackedInline):
     model = ProblemImage
@@ -20,13 +23,13 @@ class AreaAdmin(admin.ModelAdmin):
 class ArtificialProblemAdmin(admin.ModelAdmin):
     list_filter = ('grade','steepness')
     list_display = ('grade','holds','steepness')
-    inlines = [ProblemImageInline,ProblemVideoInline]
+    inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
 
 
 class NaturalProblemAdmin(admin.ModelAdmin):
     list_filter = ('grade','steepness')
     list_display = ('grade','steepness')
-    inlines = [ProblemImageInline,ProblemVideoInline]
+    inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
     pass
 
 
