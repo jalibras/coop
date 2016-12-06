@@ -19,7 +19,7 @@
     <link href="{% static "bootstrap/css/ie10-viewport-bug-workaround.css" %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{% static "bootstrap/starter-template.css" %}" rel="stylesheet">
+    <link href="{% static "css/starter-template.css" %}" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -50,13 +50,21 @@
             <!--<li><a href="{% url "guide:index"%}">Problems</a></li>-->
             {% block navitems %} 
             {% endblock %}
-            <li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
-            <a href="{% url "members:logout" %}?next={{request.path}}">Log out</a>
-            {% else %}
-            <a href="{% url "members:login" %}?next={{request.path}}">Log in</a>
-            {% endif %}
+            <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >Welcome {{user.first_name}} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li> <a href="{% url "members:logout" %}?next={{request.path}}">Log out</a> </li>
+                <li> <a href="#">Profile</a> </li>
+            </ul>
             </li>
+            {% else %}
+            <li>
+            <a href="{% url "members:login" %}?next={{request.path}}">Log in</a>
+            </li>
+            {% endif %}
 
           </ul>
         </div><!--/.nav-collapse -->
