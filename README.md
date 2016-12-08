@@ -13,4 +13,16 @@ $ python manage.py runserver
 
 This will serve the site on localhost:8000
 
+# TODO list
 
+1. Implement searching and filtering on the problem list page. 
+Users should be able to filter problems by a single grade and 
+possibly by a range eg find all problems in the range 6A-6C
+
+2. Make the coop problem list the default homepage. 
+
+3. Add a member profile page, photos, links, etc
+
+4. Implement a problem ticklist for members
+
+ 
