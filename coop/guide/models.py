@@ -82,6 +82,7 @@ class ArtificialProblem(BaseProblem):
     setter=models.CharField(max_length=300,null=True,blank=True)
 
 class NaturalProblem(BaseProblem):
+    name=models.CharField(max_length=300,null=True,blank=True)
     rock_type=models.CharField(max_length=50,null=True,blank=True)
     first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
 
