@@ -28,7 +28,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <strong>{{ prob.grade }}</strong>, 
+                    <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, </strong>{%endif%}{{ prob.grade }}, 
                     {{prob.steepness_func}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
                 </h3>
                 <a data-toggle="collapse" href="#collapse{{prob.id}}" class="toggle-description">Description</a>
