@@ -1,8 +1,11 @@
-# coop
+# Intro
 
-An online bouldering guidebook for the Galway climbing coop. 
+An online bouldering guidebook for the Galway climbing coop. For the moment 
+it is hosted at jalibras.pythonanywhere.com/home
+
 
 # Installation
+
 
 requires python 3.4, Django 1.10 and Boostrap 3.3. Clone the repo and 
 then run 
