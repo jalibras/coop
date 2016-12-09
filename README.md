@@ -1,7 +1,7 @@
 # Intro
 
 An online bouldering guidebook for the Galway climbing coop. For the moment 
-it is hosted at jalibras.pythonanywhere.com/home
+it is hosted at http://jalibras.pythonanywhere.com/home
 
 
 # Installation
