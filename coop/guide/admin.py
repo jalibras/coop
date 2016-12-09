@@ -13,6 +13,7 @@ class CommentInline(admin.StackedInline):
 
 class ProblemImageInline(admin.StackedInline):
     model = ProblemImage
+    readonly_fields=['display']
 
 class ProblemVideoInline(admin.StackedInline):
     model = ProblemVideo
