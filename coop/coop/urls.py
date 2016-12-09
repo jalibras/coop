@@ -19,9 +19,11 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
+from guide.views import area
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$',area),
     url(r'^guide/', include('guide.urls',namespace="guide")),
     url(r'^home/', include('homepage.urls',namespace="homepage")),
     url(r'^members/', include('members.urls',namespace="members")),

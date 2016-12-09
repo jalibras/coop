@@ -2,21 +2,6 @@
 
 {% extends "base.html" %}
 
-{% block navitems %}
-
-<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Areas <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-        {% for ar in arlist %}
-        <li><a href="{% url "guide:area" ar.id%}">{{ar.name}}</a></li>
-        {%endfor%}
-    </ul>
-    </li>
-
-
-
-{% endblock %}
-
-
 
 {% block main %}
 
@@ -28,7 +13,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, </strong>{%endif%}{{ prob.grade }}, 
+                    <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, {%endif%}{{ prob.grade }}, </strong>
                     {{prob.steepness_func}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
                 </h3>
                 <a data-toggle="collapse" href="#collapse{{prob.id}}" class="toggle-description">Description</a>
