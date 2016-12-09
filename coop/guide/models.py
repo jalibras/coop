@@ -94,11 +94,13 @@ class ProblemImage(models.Model):
 
     # method for displaying in the admin 
     def display(self):
-        im_url = settings.MEDIA_URL+self.image_file.name
-        ht += "<p><img src='{url}' width='100%'/>".format(url=im_url)
-        return format_html(ht)
+        if self.image_file.name:
+            im_url = settings.MEDIA_URL+self.image_file.name
+            ht = "<p><img src='{url}' width='100%'/>".format(url=im_url)
+            return format_html(ht)
+        else:
+            return format_html('')
 
-        pass
 
 
 class Comment(models.Model):

@@ -1,6 +1,10 @@
 
 
+from guide.models import Area
 
 def nav(request):
-    return {}
+    areas = Area.objects.all()
+    return {
+            'areas':areas,
+    }
 
