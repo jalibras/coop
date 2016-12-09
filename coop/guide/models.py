@@ -59,7 +59,8 @@ class BaseProblem(models.Model):
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
 
-# methods for embedding media
+# methods for embedding media in the admin
+# for the site this stuff should be in the templates
     def pictures(self):
         pic_list = self.problemimage_set.all()
         if len(pic_list)==0:
@@ -90,6 +91,15 @@ class NaturalProblem(BaseProblem):
 class ProblemImage(models.Model):
     problem = models.ForeignKey(BaseProblem)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
+
+    # method for displaying in the admin 
+    def display(self):
+        im_url = settings.MEDIA_URL+self.image_file.name
+        ht += "<p><img src='{url}' width='100%'/>".format(url=im_url)
+        return format_html(ht)
+
+        pass
+
 
 class Comment(models.Model):
     text = models.TextField()
