@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
+from django.forms import inlineformset_factory
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from guide.models import BaseProblem,Area,ProblemVideo,Comment
+from guide.models import BaseProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
 from guide.forms import ProblemVideoForm,CommentForm,NaturalProblemForm
 
 # Create your views here.
@@ -40,14 +40,29 @@ def submitproblem(request,**kwargs):
 
     if request.method=='POST':
         # process form submission
+        if request.POST['problem_type']=='natural':
+            form = NaturalProblemForm(request.POST)
+            if form.is_valid():
+                nat_prob=form.save(commit=False)
+                nat_prob.save()
+                #return HttpResponse(str(form.cleaned_data))
+                #nat_prob = NaturalProblem.objects.create(form.cleaned_data)
+                #nat_prob.save()
+                return HttpResponse('Problem saved')
+            else:
+                return HttpResponse('Problem not saved')
+        else:
+            return HttpResponse('unknown problem type')
         pass
     else:
         if request.GET.get('type')=='natural':
             form = NaturalProblemForm()
+            problemimage_formset=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=1)
 
             return render(request,'guide/problem_submission.html',{
                     'problem_type':'natural',
                     'form':form,
+                    'fs':problemimage_formset,
                     })
 
 
