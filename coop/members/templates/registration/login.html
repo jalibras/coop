@@ -12,7 +12,7 @@ You are logged in
 
 
 
-<form class="form-signin" method="post" action="{% url 'members:login' %}">
+<form class="form-signin" method="post" action="{% url 'login' %}">
     <h4 class="form-signin-heading">
         {% if form.errors %}
         <p>Your email and password didn't match. Please try again.</p>
@@ -33,7 +33,7 @@ You are logged in
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
                                         {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'members:password_reset' %}">Lost password? (NOT IMPLEMENTED)</a></p>
+<p><a href="{% url 'password_reset' %}">Lost password? (NOT IMPLEMENTED)</a></p>
 
 
 {% endif %}
