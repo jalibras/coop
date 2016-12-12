@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from django.http import Http404,HttpResponseRedirect,HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from guide.models import BaseProblem,Area,ProblemVideo,Comment
 from guide.forms import ProblemVideoForm,CommentForm,NaturalProblemForm
@@ -34,6 +35,7 @@ def area(request,areaid=1):
         })
 
 
+@login_required
 def submitproblem(request,**kwargs):
 
     if request.method=='POST':

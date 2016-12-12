@@ -150,7 +150,7 @@ AUTH_USER_MODEL = 'members.User'
 
 #login url
 
-LOGIN_URL = "/members/login"
+LOGIN_URL = "/members/auth/login/"
 
 # login redirect URL
 LOGIN_REDIRECT_URL='/home/'
