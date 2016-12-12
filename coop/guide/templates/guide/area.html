@@ -14,7 +14,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, {%endif%}{{ prob.grade }}, </strong>
-                    {{prob.steepness_func}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
+                    {{prob.steepness}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
                 </h3>
                 <a data-toggle="collapse" href="#collapse{{prob.id}}" class="toggle-description">Description</a>
             </div>

@@ -20,3 +20,11 @@ class NaturalProblemForm(ModelForm):
         model = NaturalProblem
         exclude = []
 
+    def clean(self):
+        data = super(NaturalProblemForm,self).clean()
+# put some custom validation logic here
+        return data
+
+
+
+
