@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 
 from guide.models import BaseProblem,Area,ProblemVideo,Comment
-from guide.forms import ProblemVideoForm,CommentForm
+from guide.forms import ProblemVideoForm,CommentForm,NaturalProblemForm
 
 # Create your views here.
 
@@ -32,6 +32,21 @@ def area(request,areaid=1):
         'arlist':arlist,
         'prob_list':prob_list,
         })
+
+
+def submitproblem(request,**kwargs):
+
+    if request.method=='POST':
+        # process form submission
+        pass
+    else:
+        if request.GET.get('type')=='natural':
+            form = NaturalProblemForm()
+
+            return render(request,'guide/problem_submission.html',{
+                    'problem_type':'natural',
+                    'form':form,
+                    })
 
 
 def problem(request,id):
