@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from guide.models import ProblemVideo,Comment
+from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment
 
 
 class ProblemVideoForm(ModelForm):
@@ -14,4 +14,9 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ['text']
 
+
+class NaturalProblemForm(ModelForm):
+    class Meta:
+        model = NaturalProblem
+        exclude = []
 
