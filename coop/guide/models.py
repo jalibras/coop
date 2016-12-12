@@ -47,11 +47,11 @@ class BaseProblem(models.Model):
     grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True)
     STEEPNESS_CHOICES = (
             ('slab','slab'),
-            ('vert','vertical'),
-            ('slov','slight overhang'),
-            ('over','overhang'),
-            ('exov','extreme overhang'),
-            ('na','not applicable'),
+            ('vertcal','vertical'),
+            ('slightly overhanging','slightly overhanging'),
+            ('overhanging','overhanging'),
+            ('extremely overhanging','extremely overhanging'),
+            ('not applicable','not applicable'),
             )
     steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
     def steepness_func(self):
