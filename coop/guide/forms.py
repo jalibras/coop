@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 
 from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment
@@ -25,6 +26,16 @@ class NaturalProblemForm(ModelForm):
 # put some custom validation logic here
         return data
 
+
+class AddNaturalProblemForm(ModelForm):
+    class Meta:
+        model = NaturalProblem
+        exclude = ['exists']
+
+    def clean(self):
+        #if self.instance.problemimage_set.all().count()==0:
+            #raise forms.ValidationError('You must upload at least one image for this problem')
+        return super(AddNaturalProblemForm,self).clean()
 
 
 
