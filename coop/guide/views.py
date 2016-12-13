@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, ValidationError
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from guide.models import BaseProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
-from guide.forms import ProblemVideoForm,CommentForm,NaturalProblemForm
+from guide.forms import ProblemVideoForm,CommentForm,NaturalProblemForm,AddNaturalProblemForm
 
 # Create your views here.
 
@@ -38,32 +38,43 @@ def area(request,areaid=1):
 @login_required
 def submitproblem(request,**kwargs):
 
+    problemimage_formset=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=1)
     if request.method=='POST':
         # process form submission
         if request.POST['problem_type']=='natural':
-            form = NaturalProblemForm(request.POST)
-            if form.is_valid():
-                nat_prob=form.save(commit=False)
-                nat_prob.save()
-                #return HttpResponse(str(form.cleaned_data))
-                #nat_prob = NaturalProblem.objects.create(form.cleaned_data)
-                #nat_prob.save()
+            form = AddNaturalProblemForm(request.POST)
+            formset = problemimage_formset(request.POST)
+            if form.is_valid() and formset.is_valid():
+                prob = form.save(commit=False)
+                images  = formset.save(commit=False)
+                for image in images:
+                    image.problems = prob
+                    image.save(commit=False)
+                if prob.problemimage_set.all().count()==0 and len(images)==0:
+                    raise ValidationError('You must have at least one image')
+                else:
+                    prob.save()
+                    for image in images:
+                        image.save()
+
                 return HttpResponse('Problem saved')
-            else:
-                return HttpResponse('Problem not saved')
+            #else:
+            #    return HttpResponse('Problem not saved')
         else:
             return HttpResponse('unknown problem type')
         pass
     else:
         if request.GET.get('type')=='natural':
-            form = NaturalProblemForm()
-            problemimage_formset=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=1)
+            form = AddNaturalProblemForm()
+            formset = problemimage_formset()
+        else:
+            return HttpResponse('unknown problem type')
 
-            return render(request,'guide/problem_submission.html',{
-                    'problem_type':'natural',
-                    'form':form,
-                    'fs':problemimage_formset,
-                    })
+    return render(request,'guide/problem_submission.html',{
+                'problem_type':'natural',
+                'form':form,
+                'fs':formset,
+                })
 
 
 def problem(request,id):
