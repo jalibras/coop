@@ -38,31 +38,34 @@ def area(request,areaid=1):
 @login_required
 def submitproblem(request,**kwargs):
 
-    problemimage_formset=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=1)
+    problemimage_formset=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
-        # process form submission
+        # process form submission - need to add validation and to ensure that each problem has at least one image. Maybe do this with an extra field in the BaseProblem model for image required that defaults to True. Problem is only published when image required is False. 
         if request.POST['problem_type']=='natural':
-            form = AddNaturalProblemForm(request.POST)
-            formset = problemimage_formset(request.POST)
-            if form.is_valid() and formset.is_valid():
-                prob = form.save(commit=False)
-                images  = formset.save(commit=False)
-                for image in images:
-                    image.problems = prob
-                    image.save(commit=False)
-                if prob.problemimage_set.all().count()==0 and len(images)==0:
-                    raise ValidationError('You must have at least one image')
-                else:
-                    prob.save()
-                    for image in images:
-                        image.save()
 
-                return HttpResponse('Problem saved')
-            #else:
-            #    return HttpResponse('Problem not saved')
+            form = AddNaturalProblemForm(request.POST)
+            if form.is_valid():
+                prob = form.save()
+                formset = problemimage_formset(request.POST,instance=prob)
+                # do we need to validate formset?
+                if formset.is_valid():
+                    # TODO I don't know how to save the formset???
+                    for f in formset.forms:
+
+                        im = f.save(commit=False)
+                        im.problem = prob
+                        im.save()
+
+                    #formset.save()
+                else:
+                    raise ValidationError('Formset not valid')
+            else:
+                raise ValidationError('Form not valid')
+                # now check to see if the problem has any images and update the image required flag - TODO
+            return HttpResponse('Problem saved')
         else:
             return HttpResponse('unknown problem type')
-        pass
+
     else:
         if request.GET.get('type')=='natural':
             form = AddNaturalProblemForm()
