@@ -26,7 +26,7 @@ def area(request,areaid=1):
     view for homepage
     """
     area = Area.objects.get(id=areaid)
-    prob_list = BaseProblem.objects.filter(area=area)
+    prob_list = BaseProblem.objects.filter(area=area,approved=True)
     arlist = Area.objects.all()
     return render(request,'guide/area.html',{
         'area':area,
@@ -37,26 +37,26 @@ def area(request,areaid=1):
 
 @login_required
 def submitproblem(request,**kwargs):
+    #import pdb; pdb.set_trace()
 
-    problemimage_formset=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
+    ProblemImageFormSet=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
         # process form submission - need to add validation and to ensure that each problem has at least one image. Maybe do this with an extra field in the BaseProblem model for image required that defaults to True. Problem is only published when image required is False. 
         if request.POST['problem_type']=='natural':
 
-            form = AddNaturalProblemForm(request.POST)
+            form = NaturalProblemForm(request.POST,request.FILES)
             if form.is_valid():
                 prob = form.save()
-                formset = problemimage_formset(request.POST,instance=prob)
+                prob.owner=request.user.member
+                prob.save(force_update=True)
+                if prob.owner !=request.user.member:
+                    raise ValueError('Woah!')
+
+                formset = ProblemImageFormSet(request.POST,request.FILES,instance=prob)
                 # do we need to validate formset?
                 if formset.is_valid():
-                    # TODO I don't know how to save the formset???
-                    for f in formset.forms:
+                    formset.save()
 
-                        im = f.save(commit=False)
-                        im.problem = prob
-                        im.save()
-
-                    #formset.save()
                 else:
                     raise ValidationError('Formset not valid')
             else:
@@ -69,7 +69,8 @@ def submitproblem(request,**kwargs):
     else:
         if request.GET.get('type')=='natural':
             form = AddNaturalProblemForm()
-            formset = problemimage_formset()
+            #dummy = NaturalProblem()
+            formset = ProblemImageFormSet()
         else:
             return HttpResponse('unknown problem type')
 
