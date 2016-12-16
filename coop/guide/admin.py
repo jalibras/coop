@@ -22,14 +22,14 @@ class AreaAdmin(admin.ModelAdmin):
     pass
 
 class ArtificialProblemAdmin(admin.ModelAdmin):
-    list_filter = ('grade','steepness')
-    list_display = ('grade','holds','steepness')
+    list_filter = ('area','grade','steepness')
+    list_display = ('area','grade','holds','steepness')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
 
 
 class NaturalProblemAdmin(admin.ModelAdmin):
-    list_filter = ('grade','steepness')
-    list_display = ('grade','steepness')
+    list_filter = ('area','grade','steepness')
+    list_display = ('area','grade','steepness')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
     pass
 
@@ -39,3 +39,4 @@ class NaturalProblemAdmin(admin.ModelAdmin):
 admin.site.register(ArtificialProblem,ArtificialProblemAdmin)
 admin.site.register(NaturalProblem,NaturalProblemAdmin)
 admin.site.register(Area,AreaAdmin)
+admin.site.register(ProblemImage)

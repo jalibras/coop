@@ -58,6 +58,8 @@ class BaseProblem(models.Model):
         return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
+    approved=models.BooleanField(default=True)
+    owner=models.ForeignKey(Member,null=True,blank=True)
 
 # methods for embedding media in the admin
 # for the site this stuff should be in the templates
