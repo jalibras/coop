@@ -69,7 +69,7 @@ def submitproblem(request,**kwargs):
 
     else:
         if request.GET.get('type')=='natural':
-            form = AddNaturalProblemForm()
+            form = AddNaturalProblemForm(initial={ k:request.GET[k][0] for k in request.GET} )
             #dummy = NaturalProblem()
             formset = ProblemImageFormSet()
         else:
