@@ -4,7 +4,7 @@ from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from guide.models import BaseProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
-from guide.forms import ProblemVideoForm,CommentForm,NaturalProblemForm,AddNaturalProblemForm
+from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm
 
 # Create your views here.
 
@@ -44,12 +44,14 @@ def submitproblem(request,**kwargs):
         # process form submission - need to add validation and to ensure that each problem has at least one image. Maybe do this with an extra field in the BaseProblem model for image required that defaults to True. Problem is only published when image required is False. 
         if request.POST['problem_type']=='natural':
 
-            form = NaturalProblemForm(request.POST,request.FILES)
+            form = AddNaturalProblemForm(request.POST,request.FILES)
+        elif request.POST['problem_type']=='artificial':
+            form = AddArtificialProblemForm(request.POST,request.FILES)
             if form.is_valid():
                 prob = form.save()
                 prob.owner=request.user.member
                 prob.save(force_update=True)
-                #raise ValueError(prob.owner.user.first_name)
+                # now stop anyone trying to add a different owner
                 if prob.owner !=request.user.member:
                     raise ValueError('Woah!')
 
@@ -58,10 +60,6 @@ def submitproblem(request,**kwargs):
                 if formset.is_valid():
                     formset.save()
 
-                else:
-                    raise ValidationError('Formset not valid')
-            else:
-                raise ValidationError('Form not valid')
                 # now check to see if the problem has any images and update the image required flag - TODO
             return HttpResponse('Problem saved')
         else:
@@ -69,7 +67,10 @@ def submitproblem(request,**kwargs):
 
     else:
         if request.GET.get('type')=='natural':
-            form = AddNaturalProblemForm(initial={ k:request.GET[k][0] for k in request.GET} )
+            # prepopulates the form with get values from the request
+            form = AddNaturalProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
+        elif request.GET.get('type')=='artificial':
+            form = AddArtificialProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
             #dummy = NaturalProblem()
             formset = ProblemImageFormSet()
         else:
