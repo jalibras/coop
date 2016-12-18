@@ -16,21 +16,17 @@ class CommentForm(ModelForm):
         fields = ['text']
 
 
-class NaturalProblemForm(ModelForm):
+class AddArtificialProblemForm(ModelForm):
     class Meta:
-        model = NaturalProblem
-        exclude = ['owner']
+        model = ArtificialProblem
+        exclude = ['exists','owner']
 
-    def clean(self):
-        data = super(NaturalProblemForm,self).clean()
-# put some custom validation logic here
-        return data
 
 
 class AddNaturalProblemForm(ModelForm):
     class Meta:
         model = NaturalProblem
-        exclude = ['exists']
+        exclude = ['exists','owner']
 
     def clean(self):
         #if self.instance.problemimage_set.all().count()==0:
