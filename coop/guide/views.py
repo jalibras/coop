@@ -49,6 +49,7 @@ def submitproblem(request,**kwargs):
                 prob = form.save()
                 prob.owner=request.user.member
                 prob.save(force_update=True)
+                #raise ValueError(prob.owner.user.first_name)
                 if prob.owner !=request.user.member:
                     raise ValueError('Woah!')
 

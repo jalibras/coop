@@ -19,7 +19,7 @@ class CommentForm(ModelForm):
 class NaturalProblemForm(ModelForm):
     class Meta:
         model = NaturalProblem
-        exclude = []
+        exclude = ['owner']
 
     def clean(self):
         data = super(NaturalProblemForm,self).clean()
