@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.forms import inlineformset_factory, ValidationError
 from django.http import Http404,HttpResponseRedirect,HttpResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 
 from guide.models import BaseProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm
+
+from members.decorators import member_required
 
 # Create your views here.
 
@@ -39,7 +41,7 @@ def area(request,areaid=1):
         })
 
 
-@login_required
+@user_passes_test(lambda u:hasattr(u,'member'))
 def submitproblem(request,**kwargs):
 
     ProblemImageFormSet=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
