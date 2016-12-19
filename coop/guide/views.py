@@ -9,7 +9,11 @@ from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,Ad
 # Create your views here.
 
 
-#def navigatio
+# placeholder for permissions method
+def permission(*args,**kwargs):
+# we need to implement permission logic 
+    return True
+
 
 
 def index(request):
@@ -37,7 +41,6 @@ def area(request,areaid=1):
 
 @login_required
 def submitproblem(request,**kwargs):
-    #import pdb; pdb.set_trace()
 
     ProblemImageFormSet=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
@@ -72,9 +75,9 @@ def submitproblem(request,**kwargs):
         elif request.GET.get('type')=='artificial':
             form = AddArtificialProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
             #dummy = NaturalProblem()
-            formset = ProblemImageFormSet()
         else:
             return HttpResponse('unknown problem type')
+        formset = ProblemImageFormSet()
 
     return render(request,'guide/problem_submission.html',{
                 'problem_type':'natural',
