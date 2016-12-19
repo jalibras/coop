@@ -8,6 +8,13 @@
 
 <div class="container">
     <h3>{{area.name}}</h3>
+    {% if user.member %}
+    <a href="{% url "guide:submit"%}?type={{area.area_type}}&area={{area.id}}" class="btn btn-info" role="button">Submit a new problem for this area</a>
+    {% else %}
+    <a href="{% url "login"%}?next={{ request.path }}" class="btn btn-info" role="button">Login to submit a new problem for this area</a>
+    
+    {% endif %}
+    <p>
     <div class="panel-group">
         {% for prob in prob_list %}
         <div class="panel panel-default">
