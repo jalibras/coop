@@ -2,14 +2,14 @@ from django.db import models
 from django.conf import settings
 from django.utils.html import format_html
 
-
+from guide.mixins import PermissionMixin
 from members.models import Member
 
 
 # Create your models here.
 
 
-class Area(models.Model):
+class Area(models.Model,PermissionMixin):
     name=models.CharField(max_length=300,null=True,blank=True)
     description=models.TextField(null=True,blank=True)
     area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
@@ -22,7 +22,7 @@ class Area(models.Model):
     def __str__(self):
         return self.name
 
-class BaseProblem(models.Model):
+class BaseProblem(models.Model,PermissionMixin):
     area=models.ForeignKey('Area',null=True,blank=True)
     FONT_GRADES=(
             ('?','?'),
@@ -91,7 +91,7 @@ class NaturalProblem(BaseProblem):
     first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
 
 
-class ProblemImage(models.Model):
+class ProblemImage(models.Model,PermissionMixin):
     problem = models.ForeignKey(BaseProblem)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
 
@@ -106,12 +106,12 @@ class ProblemImage(models.Model):
 
 
 
-class Comment(models.Model):
+class Comment(models.Model,PermissionMixin):
     text = models.TextField()
     problem = models.ForeignKey(BaseProblem,null=True,blank=True)
     member = models.ForeignKey(Member,null=True,blank=True)
  
-class ProblemVideo(models.Model):
+class ProblemVideo(models.Model,PermissionMixin):
     embed_code = models.CharField(max_length=1000)
     problem = models.ForeignKey(BaseProblem,null=True,blank=True)
     member = models.ForeignKey(Member,null=True,blank=True) 
