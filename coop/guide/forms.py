@@ -19,14 +19,14 @@ class CommentForm(ModelForm):
 class AddArtificialProblemForm(ModelForm):
     class Meta:
         model = ArtificialProblem
-        exclude = ['exists','owner']
+        exclude = ['exists','owner','approved']
 
 
 
 class AddNaturalProblemForm(ModelForm):
     class Meta:
         model = NaturalProblem
-        exclude = ['exists','owner']
+        exclude = ['exists','owner','approved']
 
     def clean(self):
         #if self.instance.problemimage_set.all().count()==0:

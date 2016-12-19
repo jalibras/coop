@@ -50,23 +50,24 @@ def submitproblem(request,**kwargs):
             form = AddNaturalProblemForm(request.POST,request.FILES)
         elif request.POST['problem_type']=='artificial':
             form = AddArtificialProblemForm(request.POST,request.FILES)
-            if form.is_valid():
-                prob = form.save()
-                prob.owner=request.user.member
-                prob.save(force_update=True)
-                # now stop anyone trying to add a different owner
-                if prob.owner !=request.user.member:
-                    raise ValueError('Woah!')
+        else:
+            return HttpResponse('unknown problem type')
 
-                formset = ProblemImageFormSet(request.POST,request.FILES,instance=prob)
-                # do we need to validate formset?
-                if formset.is_valid():
+        formset = ProblemImageFormSet(request.POST,request.FILES)
+        if form.is_valid():
+            prob = form.save()
+            prob.owner=request.user.member
+            prob.save(force_update=True)
+            # now stop anyone trying to add a different owner
+            if prob.owner !=request.user.member:
+                raise ValueError('Woah!')
+
+            formset.instance=prob
+            if formset.is_valid():
                     formset.save()
 
                 # now check to see if the problem has any images and update the image required flag - TODO
             return HttpResponse('Problem saved')
-        else:
-            return HttpResponse('unknown problem type')
 
     else:
         if request.GET.get('type')=='natural':
@@ -74,7 +75,6 @@ def submitproblem(request,**kwargs):
             form = AddNaturalProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
         elif request.GET.get('type')=='artificial':
             form = AddArtificialProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
-            #dummy = NaturalProblem()
         else:
             return HttpResponse('unknown problem type')
         formset = ProblemImageFormSet()
