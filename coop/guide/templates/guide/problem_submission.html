@@ -1,18 +1,20 @@
 
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block main %}
 
 <form method="post" enctype="multipart/form-data">
 
     {% csrf_token %}
 
-{{form.as_p}}
+{{form|crispy}}
 
 <h3>Images for this problem</h3>
 <h4>Please submit at least one image.</h4>
 <p>
-{{ fs}}
+{{ fs|crispy }}
 
 <input type="hidden" name="problem_type" value = "{{problem_type}}"/>
 
