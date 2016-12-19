@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.html import format_html
 
-from guide.mixins import PermissionMixin
+from members.mixins import PermissionMixin
 from members.models import Member
 
 
