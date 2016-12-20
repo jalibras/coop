@@ -40,3 +40,30 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+
+/* styling for the problem list */
+
+.panel-heading {
+    cursor: pointer;
+    border-radius:5px;
+    padding:0px;
+}
+
+.panel-title {
+}
+
+.problem-grade {
+    display:inline-block;
+    padding:8px;
+    border-radius:3px 0px 0px 3px;
+    width: 45px;
+    background-color:#fff;
+}
+
+.problem-heading {
+    display:inline-block;
+}
+
+
+
