@@ -115,3 +115,14 @@ class ProblemVideo(models.Model,PermissionMixin):
     embed_code = models.CharField(max_length=1000)
     problem = models.ForeignKey(BaseProblem,null=True,blank=True)
     member = models.ForeignKey(Member,null=True,blank=True) 
+
+
+
+
+class Send(models.Model):
+    member = models.ForeignKey(Member,on_delete=models.CASCADE)
+    problem = models.ForeignKey(BaseProblem,on_delete=models.CASCADE)
+    date = models.DateField(null=True,blank=True)
+
+
+
