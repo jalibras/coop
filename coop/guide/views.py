@@ -33,7 +33,8 @@ def area(request,areaid=1):
     view for homepage
     """
     area = Area.objects.get(id=areaid)
-    prob_list = BaseProblem.objects.filter(area=area,approved=True)
+    ord_by = request.GET.get('order_by','grade')
+    prob_list = BaseProblem.objects.filter(area=area,approved=True).order_by(ord_by)
     arlist = Area.objects.all()
     return render(request,'guide/area.html',{
         'area':area,
