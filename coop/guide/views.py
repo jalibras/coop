@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.forms import inlineformset_factory, ValidationError
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required,user_passes_test
+from django.urls import reverse
 
 from guide.models import BaseProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm
@@ -47,10 +48,10 @@ def submitproblem(request,**kwargs):
     ProblemImageFormSet=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
         # process form submission - need to add validation and to ensure that each problem has at least one image. Maybe do this with an extra field in the BaseProblem model for image required that defaults to True. Problem is only published when image required is False. 
-        if request.POST['problem_type']=='natural':
+        if request.GET.get('type')=='natural':
 
             form = AddNaturalProblemForm(request.POST,request.FILES)
-        elif request.POST['problem_type']=='artificial':
+        elif request.GET.get('type')=='artificial':
             form = AddArtificialProblemForm(request.POST,request.FILES)
         else:
             return HttpResponse('unknown problem type')
@@ -69,7 +70,11 @@ def submitproblem(request,**kwargs):
                     formset.save()
 
                 # now check to see if the problem has any images and update the image required flag - TODO
-            return HttpResponse('Problem saved')
+            return render(request,'guide/message.html',{
+                'message':"Your problem has been saved",
+                'next':reverse('guide:area',args=[prob.area.id]),
+                })
+        #HttpResponse('Problem saved')
 
     else:
         if request.GET.get('type')=='natural':

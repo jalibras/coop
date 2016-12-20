@@ -48,7 +48,7 @@ class BaseProblem(models.Model,PermissionMixin):
     grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True)
     STEEPNESS_CHOICES = (
             ('slab','slab'),
-            ('vertcal','vertical'),
+            ('vertical','vertical'),
             ('slightly overhanging','slightly overhanging'),
             ('overhanging','overhanging'),
             ('extremely overhanging','extremely overhanging'),

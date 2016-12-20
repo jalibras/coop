@@ -1,7 +1,7 @@
 
-
 {% extends "base.html" %}
 
+{% load static %}
 
 {% block main %}
 
@@ -18,12 +18,14 @@
     <div class="panel-group">
         {% for prob in prob_list %}
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, {%endif%}{{ prob.grade }}, </strong>
-                    {{prob.steepness}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
+            <div class="panel-heading" data-toggle="collapse" href="#collapse{{prob.id}}">
+                <h3 class="panel-title" style="">
+                    <div class="problem-grade" data="{{prob.grade}}">{{prob.grade}}</div>
+                    <div class="problem-heading">
+                        <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, {%endif%} </strong>
+                        {{prob.steepness}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%}
+                    </div>
                 </h3>
-                <a data-toggle="collapse" href="#collapse{{prob.id}}" class="toggle-description">Description</a>
             </div>
             <div id="collapse{{prob.id}}" class="panel-collapse collapse">
                 <div class="panel-body">
@@ -38,7 +40,9 @@
 </div>
 
 
+<script src="{% static "js/area.js" %}"></script>
 
 {% endblock %}
+
 
 
