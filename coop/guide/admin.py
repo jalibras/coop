@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.utils.html import format_html
 
-from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
+from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,Send
 
 
 # Register your models here.
@@ -40,3 +40,4 @@ admin.site.register(ArtificialProblem,ArtificialProblemAdmin)
 admin.site.register(NaturalProblem,NaturalProblemAdmin)
 admin.site.register(Area,AreaAdmin)
 admin.site.register(ProblemImage)
+admin.site.register(Send)
