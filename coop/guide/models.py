@@ -55,8 +55,9 @@ class BaseProblem(models.Model,PermissionMixin):
             ('not applicable','not applicable'),
             )
     steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
-    def steepness_func(self):
-        return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
+    #def steepness_func(self):
+    #    return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
+    sector=models.CharField(max_length=200,null=True,blank=True)
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
     approved=models.BooleanField(default=True)
@@ -89,6 +90,12 @@ class NaturalProblem(BaseProblem):
     name=models.CharField(max_length=300,null=True,blank=True)
     rock_type=models.CharField(max_length=50,null=True,blank=True)
     first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
+
+
+class Sector(models.Model):
+    name = models.CharField(max_length=200,null=True,blank=True)
+    area = models.ForeignKey(Area,null=True,blank=True)
+
 
 
 class ProblemImage(models.Model,PermissionMixin):
