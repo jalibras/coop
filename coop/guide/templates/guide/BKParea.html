@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+
+
+<div class="container">
+    <h3>{{area.name}}</h3>
+    {% if True %}
+    <a href="{% url "guide:submit"%}?type={{area.area_type}}&area={{area.id}}" class="btn btn-primary" role="button">Submit a new problem for this area</a>
+    {% elif False %}
+    <a href="{% url "login"%}?next={{ request.path }}" class="btn btn-primary" role="button">Login to submit a new problem for this area</a>
+    
+    {% endif %}
+    <p>
+    <div class="panel-group">
+        {% for prob in prob_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" href="#collapse{{prob.id}}">
+                <h3 class="panel-title container-fluid" style="">
+                    <div class="row problem-info">
+                        <div class="col-md-2 problem-grade" data="{{prob.grade}}">{{prob.grade}}</div>
+                        <div class="col-md-4 problem-sector">{{prob.sector}}</div>
+                        <div class="col-md-6 problem-heading"> <strong>{% if prob.naturalproblem %}{{prob.naturalproblem.name}}, {%endif%} </strong> {{prob.steepness}}{% if prob.artificialproblem %}, {{prob.artificialproblem.holds}}{% endif%} </div>
+                    </div>
+                </h3>
+            </div>
+            <div id="collapse{{prob.id}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>{{prob.description}}
+                    <p><a href="{% url "guide:problem" id=prob.id%}">Full details with pictures and videos</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+<script src="{% static "js/area.js" %}"></script>
+
+{% endblock %}
+
+
+
