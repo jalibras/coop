@@ -3,8 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.utils.html import format_html
 
-from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,Send
-
+from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,Send,Sector
 
 # Register your models here.
 
@@ -31,7 +30,6 @@ class NaturalProblemAdmin(admin.ModelAdmin):
     list_filter = ('area','grade','steepness')
     list_display = ('area','grade','steepness')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
-    pass
 
 
 
@@ -39,5 +37,6 @@ class NaturalProblemAdmin(admin.ModelAdmin):
 admin.site.register(ArtificialProblem,ArtificialProblemAdmin)
 admin.site.register(NaturalProblem,NaturalProblemAdmin)
 admin.site.register(Area,AreaAdmin)
+admin.site.register(Sector)
 admin.site.register(ProblemImage)
 admin.site.register(Send)

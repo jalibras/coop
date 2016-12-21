@@ -20,6 +20,9 @@ class AddArtificialProblemForm(ModelForm):
     class Meta:
         model = ArtificialProblem
         exclude = ['exists','owner','approved']
+        widgets = {
+                'sector':forms.Select(choices=(('a','a'))),
+                }
 
 
 
