@@ -40,6 +40,7 @@ def area(request,areaid=1):
         'area':area,
         'arlist':arlist,
         'prob_list':prob_list,
+        'ob':ord_by,
         })
 
 
