@@ -53,29 +53,17 @@ body {
 .panel-title {
 }
 
-.problem-info {
-    border-style:solid;
-}
 
 .problem-grade {
-    /*
-    display:inline-block;
-    padding:8px;
-    border-radius:3px 0px 0px 3px;
-    background-color:#fff;
-    */
     max-width:30px;
 }
 
 .problem-sector {
-    display:inline-block;
-    padding:8px;
-    border-right:solid;
-    border-width:1px;
 }
 
-.problem-heading {
-    display:inline-block;
+.problem-list{
+    border-collapse:separate;
+    border-spacing:0 20px;
 }
 
 .problem-list-item {

@@ -16,7 +16,7 @@
     {% endif %}
     <p>
 
-    <table class="table">
+    <table class="table problem-list">
         <tr>
             <td class="col-md-1"><a href="{{request.path}}?order_by=grade">Grade</a></td>
             <td class="col-md-1"><a href="{{request.path}}?order_by=sector">Sector</a></td>
@@ -29,7 +29,7 @@
         {% for prob in prob_list %}
         <tr data-toggle="collapse" data-target="#collapse{{prob.id}}" class="accordion-toggle problem-list-item">
             <td class="col-md-1 problem-grade" data="{{prob.grade}}"><div >{{prob.grade}}</div></td>
-            <td class="col-md-4">{{prob.sector}}</td>
+            <td class="col-md-4">{{prob.sector.name}}</td>
             <td class="col-md-7">
                 {% if prob.artificialproblem %}
                 {{prob.artificialproblem.holds}}

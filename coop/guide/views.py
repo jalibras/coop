@@ -78,11 +78,16 @@ def submitproblem(request,**kwargs):
         #HttpResponse('Problem saved')
 
     else:
+        kws = { 'initial':{ k:request.GET.get(k) for k in request.GET}, }
+        if request.GET.get('area'):
+            kws['area_id']=request.GET.get('area')
         if request.GET.get('type')=='natural':
             # prepopulates the form with get values from the request
-            form = AddNaturalProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
+            #form = AddNaturalProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
+            form = AddNaturalProblemForm(**kws)
         elif request.GET.get('type')=='artificial':
-            form = AddArtificialProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
+            #form = AddArtificialProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
+            form = AddArtificialProblemForm(**kws)
         else:
             return HttpResponse('unknown problem type')
         formset = ProblemImageFormSet()

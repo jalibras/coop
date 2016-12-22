@@ -21,14 +21,14 @@ class AreaAdmin(admin.ModelAdmin):
     pass
 
 class ArtificialProblemAdmin(admin.ModelAdmin):
-    list_filter = ('area','grade','steepness')
-    list_display = ('area','grade','holds','steepness')
+    list_filter = ('area','grade','sector')
+    list_display = ('area','grade','holds','sector')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
 
 
 class NaturalProblemAdmin(admin.ModelAdmin):
-    list_filter = ('area','grade','steepness')
-    list_display = ('area','grade','steepness')
+    list_filter = ('area','grade','sector')
+    list_display = ('area','grade','sector')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
 
 
