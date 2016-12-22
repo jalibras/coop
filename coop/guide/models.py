@@ -54,10 +54,10 @@ class BaseProblem(models.Model,PermissionMixin):
             ('extremely overhanging','extremely overhanging'),
             ('not applicable','not applicable'),
             )
-    steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
+    #steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
     #def steepness_func(self):
     #    return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
-    sector=models.CharField(max_length=200,null=True,blank=True)
+    sector=models.ForeignKey('Sector',null=True,blank=True)
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
     approved=models.BooleanField(default=True)
@@ -96,6 +96,8 @@ class Sector(models.Model):
     name = models.CharField(max_length=200,null=True,blank=True)
     area = models.ForeignKey(Area,null=True,blank=True)
 
+    def __str__(self):
+        return "{ar}: {se}".format(ar=self.area.name,se=self.name)
 
 
 class ProblemImage(models.Model,PermissionMixin):
