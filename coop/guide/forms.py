@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment
+from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment,Sector
 
 
 class ProblemVideoForm(ModelForm):
@@ -17,24 +17,36 @@ class CommentForm(ModelForm):
 
 
 class AddArtificialProblemForm(ModelForm):
+    def __init__(self,*args,**kwargs):
+        q = Sector.objects.all()
+        if 'area_id' in kwargs:
+            q = q.filter(area__id=kwargs['area_id'])
+            kwargs.pop('area_id')
+        super(AddArtificialProblemForm,self).__init__(*args,**kwargs)
+        self.fields['sector'].queryset=q
+
     class Meta:
         model = ArtificialProblem
         exclude = ['exists','owner','approved']
         widgets = {
-                'sector':forms.Select(choices=(('a','a'))),
+                'sector':forms.Select(choices=(('a','a'),)),
                 }
 
 
 
 class AddNaturalProblemForm(ModelForm):
+    def __init__(self,*args,**kwargs):
+        q = Sector.objects.all()
+        if 'area_id' in kwargs:
+            q = q.filter(area__id=kwargs['area_id'])
+            kwargs.pop('area_id')
+        super(AddNaturalProblemForm,self).__init__(*args,**kwargs)
+        self.fields['sector'].queryset=q
+
     class Meta:
         model = NaturalProblem
         exclude = ['exists','owner','approved']
 
-    def clean(self):
-        #if self.instance.problemimage_set.all().count()==0:
-            #raise forms.ValidationError('You must upload at least one image for this problem')
-        return super(AddNaturalProblemForm,self).clean()
 
 
 
