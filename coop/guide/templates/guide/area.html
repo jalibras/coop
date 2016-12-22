@@ -17,7 +17,7 @@
     <p>
 
     <table class="table problem-list">
-        <tr>
+        <tr class="problem-list-header-row">
             <td class="col-md-1"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></td>
             <td class="col-md-1"><a href="{{request.path}}?order_by={% if ob == "sector" %}-{% endif %}sector">Sector</a></td>
             {% if area.area_type == 'artificial' %}

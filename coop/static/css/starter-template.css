@@ -64,6 +64,12 @@ body {
 .problem-list{
 }
 
+.problem-list-header-row {
+    font-weight:900;
+}
+
+
+
 .problem-list-item {
     cursor:pointer;
 }
