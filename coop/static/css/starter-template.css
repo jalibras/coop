@@ -62,8 +62,6 @@ body {
 }
 
 .problem-list{
-    border-collapse:separate;
-    border-spacing:0 20px;
 }
 
 .problem-list-item {
