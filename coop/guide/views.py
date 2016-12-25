@@ -4,10 +4,15 @@ from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse
 
-from guide.models import BaseProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
+from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm
 
 from members.decorators import member_required
+
+# import for class based views
+
+from django.views.generic import ListView
+
 
 # Create your views here.
 
@@ -16,6 +21,13 @@ from members.decorators import member_required
 def permission(*args,**kwargs):
 # we need to implement permission logic 
     return True
+
+
+
+class ArtificialProblemList(ListView):
+    model = ArtificialProblem
+
+
 
 
 
