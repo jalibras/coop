@@ -27,6 +27,19 @@ def permission(*args,**kwargs):
 class ArtificialProblemList(ListView):
     model = ArtificialProblem
 
+#class ArtificialAreaView(ArtificialProblemList):
+
+    def get_queryset(self,*args,**kwargs):
+        qs = super(ArtificialProblemList,self).get_queryset(*args,**kwargs)
+        if 'sector__id' in self.request.GET:
+            qs = qs.filter(sector__id=self.request.GET.get('sector__id'))
+        if 'area__id' in self.request.GET:
+            qs = qs.filter(area__id=self.request.GET.get('area__id'))
+
+        return qs
+
+    #def get_context_data(self,**kwargs):
+    #    context = super(ArtificialAreaView,self).get_context_data(**kwargs)
 
 
 
@@ -48,11 +61,18 @@ def area(request,areaid=1):
     ord_by = request.GET.get('order_by','grade')
     prob_list = BaseProblem.objects.filter(area=area,approved=True).order_by(ord_by)
     arlist = Area.objects.all()
+    if hasattr(request.user,'member'):
+        member_context = {
+                'done':{p:p.problembymember_set.filter(member=request.user.member).count()!=0 for p in prob_list},
+                }
+    else:
+        member_context=None
     return render(request,'guide/area.html',{
         'area':area,
         'arlist':arlist,
         'prob_list':prob_list,
         'ob':ord_by,
+        #'member_context':member_context,
         })
 
 
