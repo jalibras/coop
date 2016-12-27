@@ -63,6 +63,8 @@ class BaseProblem(models.Model,PermissionMixin):
     approved=models.BooleanField(default=True)
     owner=models.ForeignKey(Member,null=True,blank=True)
 
+    def __str__(self):
+        return str(self.id)
 # methods for embedding media in the admin
 # for the site this stuff should be in the templates
     def pictures(self):
@@ -128,7 +130,7 @@ class ProblemVideo(models.Model,PermissionMixin):
 
 
 
-class Send(models.Model):
+class ProblemByMember(models.Model):
     member = models.ForeignKey(Member,on_delete=models.CASCADE)
     problem = models.ForeignKey(BaseProblem,on_delete=models.CASCADE)
     date = models.DateField(null=True,blank=True)
