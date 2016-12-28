@@ -61,7 +61,8 @@ class BaseProblem(models.Model,PermissionMixin):
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
     approved=models.BooleanField(default=True)
-    owner=models.ForeignKey(Member,null=True,blank=True)
+    owner=models.ForeignKey(Member,null=True,blank=True,related_name='owned_problem_set')
+    members = models.ManyToManyField(Member,through='ProblemByMember')
 
     def __str__(self):
         return str(self.id)
