@@ -25,7 +25,7 @@
             {% else %}
             <th class="col-md-6"><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></th>
             {% endif %}
-            <th class="col-md-1"><a href="{{request.path}}?order_by=grade">Done</a></th>
+            <th class="col-md-1">Done</th>
         </thead>
         {% for prob in prob_list %}
         <tr data-toggle="collapse" data-target="#collapse{{prob.id}}" class="accordion-toggle problem-list-item">
