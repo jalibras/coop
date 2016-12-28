@@ -16,17 +16,17 @@
     {% endif %}
     <p>
 
-    <table class="table problem-list">
-        <tr class="problem-list-header-row">
-            <td class="col-md-1"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></td>
-            <td class="col-md-4"><a href="{{request.path}}?order_by={% if ob == "sector" %}-{% endif %}sector">Sector</a></td>
+    <table class="table table-hover problem-list">
+        <thead class="problem-list-header-row">
+            <th class="col-md-1"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></th>
+            <th class="col-md-4"><a href="{{request.path}}?order_by={% if ob == "sector" %}-{% endif %}sector">Sector</a></th>
             {% if area.area_type == 'artificial' %}
-            <td class="col-md-6"><a href="{{request.path}}?order_by={% if ob == "artificialproblem__holds" %}-{% endif %}artificialproblem__holds">Holds</a></td>
+            <th class="col-md-6"><a href="{{request.path}}?order_by={% if ob == "artificialproblem__holds" %}-{% endif %}artificialproblem__holds">Holds</a></th>
             {% else %}
-            <td class="col-md-6"><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></td>
+            <th class="col-md-6"><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></th>
             {% endif %}
-            <td class="col-md-1"><a href="{{request.path}}?order_by=grade">Done</a></td>
-        </tr>
+            <th class="col-md-1"><a href="{{request.path}}?order_by=grade">Done</a></th>
+        </thead>
         {% for prob in prob_list %}
         <tr data-toggle="collapse" data-target="#collapse{{prob.id}}" class="accordion-toggle problem-list-item">
             <td class="col-md-1 problem-grade" data="{{prob.grade}}"><div >{{prob.grade}}</div></td>
@@ -39,7 +39,7 @@
                 {% else %}
                 {%endif%}
             </td>
-            <td class="col-md-1">{% if request.user.member %} {% if request.user.member in prob.member_set %}Y{% else %}X{%endif %} {%else %} NA {% endif %}</td>
+            <td class="col-md-1">{% if request.user.member %} {% if request.user.member in prob.members.all %}<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>{% else %}{%endif %} {%else %} NA {% endif %}</td>
         </tr>
         <tr id="collapse{{prob.id}}" class="accordion-body collapse">
             <td colspan="3">{{prob.description}} <a href="{% url "guide:problem" prob.id %}"><span class="glyphicon glyphicon-info-sign problem-info-sign"></span></a></td>
