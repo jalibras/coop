@@ -54,15 +54,12 @@ class BaseProblem(models.Model,PermissionMixin):
             ('extremely overhanging','extremely overhanging'),
             ('not applicable','not applicable'),
             )
-    #steepness=models.CharField(max_length=50,choices=STEEPNESS_CHOICES,null=True,blank=True)
-    #def steepness_func(self):
-    #    return dict(list(self.STEEPNESS_CHOICES))[self.steepness]
     sector=models.ForeignKey('Sector',null=True,blank=True)
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
     approved=models.BooleanField(default=True)
     owner=models.ForeignKey(Member,null=True,blank=True,related_name='owned_problem_set')
-    members = models.ManyToManyField(Member,through='ProblemByMember')
+    done_by = models.ManyToManyField(Member,blank=True)
 
     def __str__(self):
         return str(self.id)

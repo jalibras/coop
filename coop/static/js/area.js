@@ -18,3 +18,7 @@ function gradeColorCode(){
         }
     }
 }
+
+function rowClickHandler(el){
+    window.document.location = el.getAttribute("data-href");
+}
