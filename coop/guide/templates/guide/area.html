@@ -25,10 +25,13 @@
             {% else %}
             <th class="col-md-6"><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></th>
             {% endif %}
+            {% if request.user.member %}
             <th class="col-md-1">Done</th>
+            {% endif %}
         </thead>
         {% for prob in prob_list %}
-        <tr data-toggle="collapse" data-target="#collapse{{prob.id}}" class="accordion-toggle problem-list-item">
+        <tr class="clickable-row" onclick="rowClickHandler(this)" data-href="{% url "guide:problem" prob.id %}">
+            <!--<tr data-toggle="collapse" data-target="#collapse{{prob.id}}" class="accordion-toggle problem-list-item">-->
             <td class="col-md-1 problem-grade" data="{{prob.grade}}"><div >{{prob.grade}}</div></td>
             <td class="col-md-4">{{prob.sector.name}}</td>
             <td class="col-md-6">
@@ -39,7 +42,9 @@
                 {% else %}
                 {%endif%}
             </td>
-            <td class="col-md-1">{% if request.user.member %} {% if request.user.member in prob.members.all %}<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>{% else %}{%endif %} {%else %} NA {% endif %}</td>
+            {% if request.user.member %}
+            <td class="col-md-1">{% if request.user.member %} {% if request.user.member in prob.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{%endif %} {%else %}  {% endif %}</td>
+            {% endif %}
         </tr>
         <tr id="collapse{{prob.id}}" class="accordion-body collapse">
             <td colspan="3">{{prob.description}} <a href="{% url "guide:problem" prob.id %}"><span class="glyphicon glyphicon-info-sign problem-info-sign"></span></a></td>

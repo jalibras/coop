@@ -4,10 +4,12 @@ from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse
 
-from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment
-from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm
+from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
+
+from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
 
 from members.decorators import member_required
+from members.models import User
 
 # import for class based views
 
@@ -172,9 +174,10 @@ def problem(request,id):
                 #return HttpResponse('Video link saved with id = {id}'.format(id=vid.id))
             else:
                 raise ValueError
- 
+
     videoform=ProblemVideoForm()
     commentform=CommentForm()
+
     return render(request,'guide/problem.html',{
         'request':request,
         'problem':problem,
@@ -184,3 +187,25 @@ def problem(request,id):
 
 
 
+
+def toggle_problem_status(request,userid,problemid):
+    try:
+        m = User.objects.get(id=userid).member
+        p = BaseProblem.objects.get(id=problemid)
+    except:
+        raise ValueError('something is wrong')
+
+    if m in p.done_by.all():
+        p.done_by.remove(m)
+    else:
+        p.done_by.add(m)
+
+    return HttpResponse('OK')
+
+def get_problem_status(request,userid,problemid):
+    m = User.objects.get(id = userid).member
+    p = BaseProblem.objects.get(id=problemid)
+    if m in p.done_by.all():
+        return HttpResponse('<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>')
+    else:
+        return HttpResponse('<span class="glyphicon glyphicon-remove"></span>')
