@@ -162,7 +162,7 @@ LOGOUT_REDIRECT_URL='/home/'
 
 # email settings for gmail smtp 
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = ""
-EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST_USER = "jamescruickshank1971@gmail.com"
+EMAIL_HOST_PASSWORD = "1m1o1y1n1e1"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
