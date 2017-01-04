@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block main %}
 
+
+
+
+
+
+{% if request.user.member %}
+
+<h3>Done?</h3>
+
+
+<script src="{% static "js/problem.js" %}">
+</script>
+<p class="status-element">
+{% if request.user.member in problem.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{%endif %}
+</p>
+<span class="btn btn-primary"  onclick="toggleStatus({{request.user.id}},{{problem.id}})">Change this</span>
+
+{% endif %}
 
 
 <h3>Problem Info</h3>
