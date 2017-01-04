@@ -4,6 +4,15 @@ from django.forms import ModelForm
 from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment,Sector
 
 
+class ProblemByMemberForm(forms.Form):
+    status = forms.ChoiceField(choices=(
+        (0,'still working on it'),
+        (1,'done it'),
+        ),
+        )
+    pass
+
+
 class ProblemVideoForm(ModelForm):
     class Meta:
         model = ProblemVideo
@@ -27,7 +36,7 @@ class AddArtificialProblemForm(ModelForm):
 
     class Meta:
         model = ArtificialProblem
-        exclude = ['exists','owner','approved']
+        exclude = ['exists','owner','approved','done_by']
         widgets = {
                 'sector':forms.Select(choices=(('a','a'),)),
                 }
@@ -45,7 +54,7 @@ class AddNaturalProblemForm(ModelForm):
 
     class Meta:
         model = NaturalProblem
-        exclude = ['exists','owner','approved']
+        exclude = ['exists','owner','approved','done_by']
 
 
 
