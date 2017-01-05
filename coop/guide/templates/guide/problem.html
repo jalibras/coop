@@ -27,6 +27,8 @@
 <h3>Problem Info</h3>
 {% if problem.artificialproblem %}
 <dl>
+    <dt>Sector</dt>
+    <dd>{{problem.sector}}</dd>
     <dt>Holds</dt>
     <dd>{{problem.artificialproblem.holds}}</dd>
     <dt>Description</dt>
@@ -40,6 +42,8 @@
 </dl>
 {% elif problem.naturalproblem %}
 <dl>
+    <dt>Sector</dt>
+    <dd>{{problem.sector}}</dd>
     <dt>Name</dt>
     <dd>{{problem.naturalproblem.name}}</dd>
     <dt>Description</dt>
