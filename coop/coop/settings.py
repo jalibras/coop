@@ -154,7 +154,7 @@ AUTH_USER_MODEL = 'members.User'
 LOGIN_URL = "/members/auth/login/"
 
 # login redirect URL
-LOGIN_REDIRECT_URL='/home/'
+LOGIN_REDIRECT_URL='/'
 
 # logout redirect URL
 LOGOUT_REDIRECT_URL='/home/'
