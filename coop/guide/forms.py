@@ -39,6 +39,9 @@ class AddArtificialProblemForm(ModelForm):
         exclude = ['exists','owner','approved','done_by']
         widgets = {
                 'sector':forms.Select(choices=(('a','a'),)),
+                'date':forms.TextInput(attrs={
+                    'type':'date'
+                    }),
                 }
 
 

@@ -7,7 +7,9 @@ it is hosted at http://jalibras.pythonanywhere.com/home
 # Installation
 
 
-requires python 3.4, Django 1.10 with crispy-forms installed, and Boostrap 3.3. Clone the repo and 
+requires python 3.4, Django 1.10 with crispy-forms installed, Boostrap 3.3, and django-bootstrap3-datetimepicker. 
+
+Clone the repo and 
 then run 
 
 $ cd coop/coop
