@@ -74,16 +74,14 @@ def area(request,areaid=1):
         'arlist':arlist,
         'prob_list':prob_list,
         'ob':ord_by,
-        #'member_context':member_context,
         })
 
 
 @user_passes_test(lambda u:hasattr(u,'member'))
 def submitproblem(request,**kwargs):
 
-    ProblemImageFormSet=inlineformset_factory(NaturalProblem,ProblemImage,fields=['image_file'],extra=2)
+    ProblemImageFormSet=inlineformset_factory(BaseProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
-        # process form submission - need to add validation and to ensure that each problem has at least one image. Maybe do this with an extra field in the BaseProblem model for image required that defaults to True. Problem is only published when image required is False. 
         if request.GET.get('type')=='natural':
 
             form = AddNaturalProblemForm(request.POST,request.FILES)
@@ -105,23 +103,21 @@ def submitproblem(request,**kwargs):
             if formset.is_valid():
                     formset.save()
 
-                # now check to see if the problem has any images and update the image required flag - TODO
+                # now check to see if the problem has any images and update the image required flag - TODO (maybe not?)
             return render(request,'guide/message.html',{
                 'message':"Your problem has been saved",
                 'next':reverse('guide:area',args=[prob.area.id]),
                 })
-        #HttpResponse('Problem saved')
 
     else:
+        #args=[ {'setter':'{fn} {ln}'.format(fn=request.user.first_name,ln=request.user.last_name)} ]
         kws = { 'initial':{ k:request.GET.get(k) for k in request.GET}, }
         if request.GET.get('area'):
             kws['area_id']=request.GET.get('area')
         if request.GET.get('type')=='natural':
             # prepopulates the form with get values from the request
-            #form = AddNaturalProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
             form = AddNaturalProblemForm(**kws)
         elif request.GET.get('type')=='artificial':
-            #form = AddArtificialProblemForm(initial={ k:request.GET.get(k) for k in request.GET} )
             form = AddArtificialProblemForm(**kws)
         else:
             return HttpResponse('unknown problem type')
@@ -187,6 +183,7 @@ def problem(request,id):
 
 
 
+# views to handle AJAX requests
 
 def toggle_problem_status(request,userid,problemid):
     try:
