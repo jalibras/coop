@@ -5,13 +5,17 @@
 {% block main %}
 
 
+{% if request.user.member.id == problem.owner.id %}
 
+    <a href="{% url "guide:update" problem.id %}" class="btn btn-primary" role="button">Edit this problem</a>
+    <p>
 
+{% endif %}
 
 
 {% if request.user.member %}
 
-<h3>Done?</h3>
+<h3>Done this one?</h3>
 
 
 <script src="{% static "js/problem.js" %}">
@@ -152,6 +156,7 @@ No videos have been posted for this problem
 <p>Log in to post a video for this problem.
 
 {% endif %}
+
 
 
 
