@@ -80,13 +80,32 @@ def area(request,areaid=1):
 @user_passes_test(lambda u:hasattr(u,'member'))
 def submitproblem(request,**kwargs):
 
+# if kwargs has problem_id then we are updating existing and we 
+# infer the problem_type from that. If it does not have 
+# problem_id then it must have problem_type 
+
+    if 'problem_id' in kwargs: # then we are updating an existing
+        base_instance = BaseProblem.objects.get(id=kwargs.pop('problem_id'))
+        if hasattr(base_instance,'artificialproblem'):
+            instance = base_instance.artificialproblem
+            problem_type='artificial'
+        elif hasattr(base_instance,'naturalproblem'):
+            instance = base_instance.naturalproblem
+            problem_type='natural'
+    else: # then we must have a problem_type kwarg
+        instance = None
+        problem_type = kwargs.pop('problem_type')
+
+            
+
+
     ProblemImageFormSet=inlineformset_factory(BaseProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
-        if request.GET.get('type')=='natural':
+        if problem_type=='natural':
 
-            form = AddNaturalProblemForm(request.POST,request.FILES)
-        elif request.GET.get('type')=='artificial':
-            form = AddArtificialProblemForm(request.POST,request.FILES)
+            form = AddNaturalProblemForm(request.POST,request.FILES,instance=instance)
+        elif problem_type=='artificial':
+            form = AddArtificialProblemForm(request.POST,request.FILES,instance=instance)
         else:
             return HttpResponse('unknown problem type')
 
@@ -110,15 +129,14 @@ def submitproblem(request,**kwargs):
                 })
 
     else:
-        #args=[ {'setter':'{fn} {ln}'.format(fn=request.user.first_name,ln=request.user.last_name)} ]
         kws = { 'initial':{ k:request.GET.get(k) for k in request.GET}, }
         if request.GET.get('area'):
             kws['area_id']=request.GET.get('area')
-        if request.GET.get('type')=='natural':
+        if problem_type=='natural':
             # prepopulates the form with get values from the request
-            form = AddNaturalProblemForm(**kws)
-        elif request.GET.get('type')=='artificial':
-            form = AddArtificialProblemForm(**kws)
+            form = AddNaturalProblemForm(instance=instance,**kws)
+        elif problem_type=='artificial':
+            form = AddArtificialProblemForm(instance=instance,**kws)
         else:
             return HttpResponse('unknown problem type')
         formset = ProblemImageFormSet()
