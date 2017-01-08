@@ -4,9 +4,13 @@ from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse
 
-from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
+from rest_framework import viewsets
 
+from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
+from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer
+
+
 
 from members.decorators import member_required
 from members.models import User
@@ -29,7 +33,6 @@ def permission(*args,**kwargs):
 class ArtificialProblemList(ListView):
     model = ArtificialProblem
 
-#class ArtificialAreaView(ArtificialProblemList):
 
     def get_queryset(self,*args,**kwargs):
         qs = super(ArtificialProblemList,self).get_queryset(*args,**kwargs)
@@ -109,7 +112,7 @@ def submitproblem(request,**kwargs):
         else:
             return HttpResponse('unknown problem type')
 
-        formset = ProblemImageFormSet(request.POST,request.FILES)
+        formset = ProblemImageFormSet(request.POST,request.FILES,instance=instance)
         if form.is_valid():
             prob = form.save()
             prob.owner=request.user.member
@@ -125,7 +128,7 @@ def submitproblem(request,**kwargs):
                 # now check to see if the problem has any images and update the image required flag - TODO (maybe not?)
             return render(request,'guide/message.html',{
                 'message':"Your problem has been saved",
-                'next':reverse('guide:area',args=[prob.area.id]),
+                'next':reverse('guide:problem',args=[prob.id]),
                 })
 
     else:
@@ -139,7 +142,7 @@ def submitproblem(request,**kwargs):
             form = AddArtificialProblemForm(instance=instance,**kws)
         else:
             return HttpResponse('unknown problem type')
-        formset = ProblemImageFormSet()
+        formset = ProblemImageFormSet(instance=instance)
 
     return render(request,'guide/problem_submission.html',{
                 'problem_type':'natural',
@@ -224,3 +227,13 @@ def get_problem_status(request,userid,problemid):
         return HttpResponse('<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>')
     else:
         return HttpResponse('<span class="glyphicon glyphicon-remove"></span>')
+
+
+
+
+
+# Django REST views
+
+class ArtificialProblemViewSet(viewsets.ModelViewSet):
+    queryset = ArtificialProblem.objects.all()
+    serializer_class = ArtificialProblemSerializer
