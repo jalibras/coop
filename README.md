@@ -7,7 +7,7 @@ it is hosted at http://galwayclimbing.pythonanywhere.com
 # Installation
 
 
-requires python 3.4, Django 1.10 with crispy-forms installed, Boostrap 3.3, and django-bootstrap3-datetimepicker. 
+requires python 3.4, Django 1.10, Django Rest Framework, Crispy-forms, Boostrap 3.3. 
 
 Clone the repo and 
 then run 
