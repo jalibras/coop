@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from guide.models import ArtificialProblem, NaturalProblem, ProblemImage, Area
+from guide.models import ArtificialProblem, NaturalProblem, ProblemImage, Area, Sector
 
 
 
@@ -25,6 +25,11 @@ class ProblemImageSerializer(serializers.ModelSerializer):
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
+        exclude = ()
+
+class SectorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sector
         exclude = ()
 
 
