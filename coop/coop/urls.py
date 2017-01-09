@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 from rest_framework import routers
 
 
-from guide.views import area, ArtificialProblemViewSet,NaturalProblemViewSet,ProblemImageViewSet
+from guide.views import area, ArtificialProblemViewSet,NaturalProblemViewSet,ProblemImageViewSet, AreaViewSet
 
 from members.views import UserViewSet,MemberViewSet
 
@@ -32,6 +32,7 @@ router.register(r'naturalproblems',NaturalProblemViewSet)
 router.register(r'problemimages',ProblemImageViewSet)
 router.register(r'users',UserViewSet)
 router.register(r'members',MemberViewSet)
+router.register(r'areas',AreaViewSet)
 
 
 
