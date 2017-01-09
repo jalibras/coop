@@ -83,7 +83,7 @@ class BaseProblem(models.Model,PermissionMixin):
 
 class ArtificialProblem(BaseProblem):
     date=models.DateField(null=True,blank=True)
-    holds=models.CharField(max_length=300,null=True,blank=True)
+    holds=models.CharField(max_length=300,null=True,blank=True,verbose_name='hold colour')
     setter=models.CharField(max_length=300,null=True,blank=True)
 
 class NaturalProblem(BaseProblem):
