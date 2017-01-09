@@ -7,7 +7,7 @@ from django.urls import reverse
 from rest_framework import viewsets
 #from rest_framework.filters import SearchFilter
 
-from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
+from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,Sector,ProblemImage,ProblemVideo,Comment,ProblemByMember
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
 from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer, ProblemImageSerializer, AreaSerializer, SectorSerializer
 
