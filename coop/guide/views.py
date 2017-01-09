@@ -9,7 +9,7 @@ from rest_framework import viewsets
 
 from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
-from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer, ProblemImageSerializer
+from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer, ProblemImageSerializer, AreaSerializer
 
 
 
@@ -259,5 +259,10 @@ class ArtificialProblemViewSet(viewsets.ModelViewSet):
 class ProblemImageViewSet(viewsets.ModelViewSet):
     queryset = ProblemImage.objects.all()
     serializer_class = ProblemImageSerializer
+
+ 
+class AreaViewSet(viewsets.ModelViewSet):
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
 
 
