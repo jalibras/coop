@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse
 
 from rest_framework import viewsets
+#from rest_framework.filters import SearchFilter
 
 from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
@@ -240,6 +241,20 @@ class NaturalProblemViewSet(viewsets.ModelViewSet):
 class ArtificialProblemViewSet(viewsets.ModelViewSet):
     queryset = ArtificialProblem.objects.all()
     serializer_class = ArtificialProblemSerializer
+    filter_fields=(
+            'grade',
+            'setter',
+            'sector',
+            'area',
+            'owner'
+            )
+    search_fields=(
+            'setter',
+            )
+    ordering_fields=(
+            'grade',
+            'date',
+            )
  
 class ProblemImageViewSet(viewsets.ModelViewSet):
     queryset = ProblemImage.objects.all()
