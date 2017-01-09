@@ -174,4 +174,9 @@ REST_FRAMEWORK = {
             'rest_framework.permissions.IsAdminUser',
             ],
         'PAGE_SIZE': 10,
+        'DEFAULT_FILTER_BACKENDS':(
+            'django_filters.rest_framework.DjangoFilterBackend',
+            'rest_framework.filters.SearchFilter',
+            'rest_framework.filters.OrderingFilter',
+            ),
         }
