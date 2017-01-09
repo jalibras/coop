@@ -19,9 +19,25 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from guide.views import area
+from rest_framework import routers
+
+
+from guide.views import area, ArtificialProblemViewSet,NaturalProblemViewSet,ProblemImageViewSet
+
+from members.views import UserViewSet,MemberViewSet
+
+router = routers.DefaultRouter()
+router.register(r'artificialproblems',ArtificialProblemViewSet)
+router.register(r'naturalproblems',NaturalProblemViewSet)
+router.register(r'problemimages',ProblemImageViewSet)
+router.register(r'users',UserViewSet)
+router.register(r'members',MemberViewSet)
+
+
 
 urlpatterns = [
+    url(r'api/', include(router.urls)),
+    url(r'api-auth/',include('rest_framework.urls',namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
     url(r'^$',area),
     url(r'^guide/', include('guide.urls',namespace="guide")),

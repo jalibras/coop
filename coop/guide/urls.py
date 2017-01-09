@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from guide import views
 
+
+
 from guide.views import ArtificialProblemList
 
 
@@ -16,4 +18,5 @@ urlpatterns = [
     url(r'^update/(?P<problem_id>\d+)',views.submitproblem,name="update"),
     url(r'^artificialproblems/',ArtificialProblemList.as_view()),
     url(r'^artificialproblems/',ArtificialProblemList.as_view()),
+
     ]
