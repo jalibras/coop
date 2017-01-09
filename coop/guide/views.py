@@ -8,7 +8,7 @@ from rest_framework import viewsets
 
 from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,ProblemImage,ProblemVideo,Comment,ProblemByMember
 from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
-from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer
+from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer, ProblemImageSerializer
 
 
 
@@ -233,7 +233,16 @@ def get_problem_status(request,userid,problemid):
 
 
 # Django REST views
+class NaturalProblemViewSet(viewsets.ModelViewSet):
+    queryset = NaturalProblem.objects.all()
+    serializer_class = NaturalProblemSerializer
 
 class ArtificialProblemViewSet(viewsets.ModelViewSet):
     queryset = ArtificialProblem.objects.all()
     serializer_class = ArtificialProblemSerializer
+ 
+class ProblemImageViewSet(viewsets.ModelViewSet):
+    queryset = ProblemImage.objects.all()
+    serializer_class = ProblemImageSerializer
+
+
