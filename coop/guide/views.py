@@ -246,14 +246,13 @@ class ArtificialProblemViewSet(viewsets.ModelViewSet):
             'setter',
             'sector',
             'area',
-            'owner'
+            'owner',
+            'approved',
+            'exists',
             )
     search_fields=(
             'setter',
-            )
-    ordering_fields=(
-            'grade',
-            'date',
+            'description',
             )
  
 class ProblemImageViewSet(viewsets.ModelViewSet):

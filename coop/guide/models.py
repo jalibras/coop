@@ -46,14 +46,14 @@ class BaseProblem(models.Model,PermissionMixin):
             ('7C+','7C+'),
             )
     grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True)
-    STEEPNESS_CHOICES = (
-            ('slab','slab'),
-            ('vertical','vertical'),
-            ('slightly overhanging','slightly overhanging'),
-            ('overhanging','overhanging'),
-            ('extremely overhanging','extremely overhanging'),
-            ('not applicable','not applicable'),
-            )
+#    STEEPNESS_CHOICES = (
+#            ('slab','slab'),
+#            ('vertical','vertical'),
+#            ('slightly overhanging','slightly overhanging'),
+#            ('overhanging','overhanging'),
+#            ('extremely overhanging','extremely overhanging'),
+#            ('not applicable','not applicable'),
+#            )
     sector=models.ForeignKey('Sector',null=True,blank=True)
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
@@ -88,7 +88,6 @@ class ArtificialProblem(BaseProblem):
 
 class NaturalProblem(BaseProblem):
     name=models.CharField(max_length=300,null=True,blank=True)
-    #rock_type=models.CharField(max_length=50,null=True,blank=True)
     first_ascensionist=models.CharField(max_length=100,null=True,blank=True)
 
 
