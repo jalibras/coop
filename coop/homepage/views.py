@@ -7,3 +7,9 @@ def index(request):
             {
                 }
             )
+
+def about(request):
+    return render(request,'homepage/about.html',
+            {
+                }
+            )
