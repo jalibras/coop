@@ -4,6 +4,7 @@ from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse
 
+
 from rest_framework import viewsets
 #from rest_framework.filters import SearchFilter
 
@@ -105,19 +106,23 @@ def submitproblem(request,**kwargs):
 
     ProblemImageFormSet=inlineformset_factory(BaseProblem,ProblemImage,fields=['image_file'],extra=2)
     if request.method=='POST':
+        # prepolulate the form with defaults
+        kws = { 'initial':{ k:request.GET.get(k) for k in request.GET}, }
         if problem_type=='natural':
 
-            form = AddNaturalProblemForm(request.POST,request.FILES,instance=instance)
+            form = AddNaturalProblemForm(request.POST,request.FILES,instance=instance,**kws)
         elif problem_type=='artificial':
-            form = AddArtificialProblemForm(request.POST,request.FILES,instance=instance)
+            form = AddArtificialProblemForm(request.POST,request.FILES,instance=instance,**kws)
         else:
             return HttpResponse('unknown problem type')
 
         formset = ProblemImageFormSet(request.POST,request.FILES,instance=instance)
         if form.is_valid():
-            prob = form.save()
-            prob.owner=request.user.member
-            prob.save(force_update=True)
+
+            if form.has_changes():
+                prob = form.save()
+                prob.owner=request.user.member
+                prob.save(force_update=True)
             # now stop anyone trying to add a different owner
             if prob.owner !=request.user.member:
                 raise ValueError('Woah!')
@@ -133,11 +138,11 @@ def submitproblem(request,**kwargs):
                 })
 
     else:
+        # prepolulate the form with defaults
         kws = { 'initial':{ k:request.GET.get(k) for k in request.GET}, }
         if request.GET.get('area'):
             kws['area_id']=request.GET.get('area')
         if problem_type=='natural':
-            # prepopulates the form with get values from the request
             form = AddNaturalProblemForm(instance=instance,**kws)
         elif problem_type=='artificial':
             form = AddArtificialProblemForm(instance=instance,**kws)
