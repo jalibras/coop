@@ -52,7 +52,7 @@
                     {% endfor %}
                 </ul>
             </li>
-            <li><a href="#about">About</a></li>
+            <li><a href="{% url "homepage:about" %}">About</a></li>
             {% block navitems %} 
             <!--app can add nav items in this block -->
             {% endblock %}
@@ -63,7 +63,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >Welcome {{user.first_name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li> <a href="{% url "logout" %}?next={{request.path}}">Log out</a> </li>
-                    <li> <a href="#">Profile</a> </li>
+                    <li> <a href="{% url "members:profile" %}">Profile</a> </li>
                 </ul>
             </li>
             {% else %}

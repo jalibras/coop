@@ -15,14 +15,16 @@
     {{ form | crispy }}
 
 <h3>Images for this problem</h3>
-<h4>Please submit at least one image.</h4>
+<p>If you like, you can add some images to the problem description. This may help to easily 
+identify the problem and will also help us to easily identify which problems are no longer
+current.
 <p>
 {{ fs|crispy }}
 
 <input type="hidden" name="problem_type" value = "{{problem_type}}"/>
 
 <p>
-<input type="submit">
+<input type="submit" class = "btn btn-primary" value="Save this problem">
 </form>
 
 {% endblock %}
