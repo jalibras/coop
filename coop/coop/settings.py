@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+
+import socket 
+
+if socket.gethostname().startswith('james'):
+    DJANGO_HOST='dev'
+else:
+    DJANGO_HOST='production'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +31,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'z8opvv_h4s!t=m%@ip*reg@x9%_snhhy=229!gsi&6)4k0)qd='
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = False
+if DJANGO_HOST=='dev':
+    DEBUG = True
 
 ALLOWED_HOSTS = ['galwayclimbing.pythonanywhere.com','jalibras.pythonanywhere.com','localhost','poincare.nuigalway.ie']
 
