@@ -12,7 +12,7 @@ from members.models import Member
 class Area(models.Model,PermissionMixin):
     name=models.CharField(max_length=300,null=True,blank=True)
     description=models.TextField(null=True,blank=True)
-    area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
+    #area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
     area_map_imagemap_snippet=models.TextField(null=True,blank=True)
     area_type=models.CharField(max_length=15,choices=(('natural','natural'),('artificial','artificial')),default='artificial')
     def video_count(self):
