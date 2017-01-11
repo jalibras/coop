@@ -82,6 +82,12 @@ def area(request,areaid=1):
         })
 
 
+def area_map(request,area_id):
+    area = Area.objects.get(id = area_id)
+    return render(request,'guide/area_map.html',{
+        'area':area,
+        })
+
 @user_passes_test(lambda u:hasattr(u,'member'))
 def submitproblem(request,**kwargs):
 
