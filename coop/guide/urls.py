@@ -17,6 +17,5 @@ urlpatterns = [
     url(r'^submit/(?P<problem_type>(natural)|(artificial))',views.submitproblem,name="submit"),
     url(r'^update/(?P<problem_id>\d+)',views.submitproblem,name="update"),
     url(r'^artificialproblems/',ArtificialProblemList.as_view()),
-    url(r'^artificialproblems/',ArtificialProblemList.as_view()),
 
     ]
