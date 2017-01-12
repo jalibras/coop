@@ -40,7 +40,7 @@
                 <div>{{prob.artificialproblem.holds}}</div>
             </td>
             <td class="">
-                <div>{{prob.artificialproblem.date | default:"" }}</div>
+                <div>{{prob.artificialproblem.date | date:"d-m-Y" }}</div>
             </td>
             {% elif prob.naturalproblem %}
             <td class="">
