@@ -23,6 +23,9 @@ class AreaImage(models.Model,PermissionMixin):
     area = models.ForeignKey(Area)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
 
+    def __str__(self):
+        return "{ar}: {id}".format(ar=self.area.name,id=self.id)
+
 
 
 class BaseProblem(models.Model,PermissionMixin):
