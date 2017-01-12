@@ -23,7 +23,7 @@
 <p class="status-element">
 {% if request.user.member in problem.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-done"></span>{% else %}<span class="glyphicon glyphicon-remove problem-member-notdone"></span>{%endif %}
 </p>
-<span class="btn btn-primary"  onclick="toggleStatus({{request.user.id}},{{problem.id}})">Change this</span>
+<span class="btn btn-primary"  onclick="toggleStatus({{request.user.id}},{{problem.id}})">Toggle done/not done</span>
 
 {% endif %}
 
