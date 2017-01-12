@@ -1,0 +1,32 @@
+/* some space around buttons when they stack*/
+
+.btn {
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+.problem-grade {
+}
+
+.problem-list {
+}
+
+.problem-list td {
+}
+
+.problem-list td div {
+}
+
+.grade-column {
+    width:35px;
+}
+
+.problem-member-done {
+    color:#00df00;
+    font-size:large;
+}
+
+.problem-member-notdone {
+    color:#aaa;
+    font-size:large;
+}

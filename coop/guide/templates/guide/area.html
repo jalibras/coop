@@ -8,48 +8,48 @@
 
 <div class="container">
     <h3>{{area.name}}</h3>
-    <a class="btn btn-primary" href ="{% url 'guide:area_map' area.id %}">Area info and map</a>
+    <a class="btn btn-primary" id="info-button" href ="{% url 'guide:area_map' area.id %}">Area info and map</a>
     {% if True %}
     <a href="{% url "guide:submit" area.area_type %}?area={{area.id}}&setter={{request.user.first_name}} {{request.user.last_name}}&date={% now "Y-m-d" %}" class="btn btn-primary" role="button">Submit a new problem for this area</a>
     {% elif False %}
-    <a href="{% url "login"%}?next={{ request.path }}" class="btn btn-primary" role="button">Login to submit a new problem for this area</a>
+    <a href="{% url "login"%}?next={{ request.path }}" id="new-problem-button" class="btn btn-primary" role="button">Login to submit a new problem for this area</a>
     
     {% endif %}
     <p>
 
     <table class="table table-hover problem-list">
         <thead class="problem-list-header-row">
-            <th class="col-md-1"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></th>
-            <th class="col-md-4"><a href="{{request.path}}?order_by={% if ob == "sector" %}-{% endif %}sector">Sector</a></th>
+            <th class="grade-column"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></th>
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "sector" %}-{% endif %}sector">Sector</a></th>
             {% if area.area_type == 'artificial' %}
-            <th class="col-md-3"><a href="{{request.path}}?order_by={% if ob == "artificialproblem__holds" %}-{% endif %}artificialproblem__holds">Hold colour</a></th>
-            <th class="col-md-3"><a href="{{request.path}}?order_by={% if ob == "artificialproblem__date" %}-{% endif %}artificialproblem__date">Date</a></th>
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "artificialproblem__holds" %}-{% endif %}artificialproblem__holds">Hold colour</a></th>
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "artificialproblem__date" %}-{% endif %}artificialproblem__date">Date</a></th>
             {% else %}
-            <th class="col-md-6"><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></th>
+            <th class=""><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></th>
             {% endif %}
             {% if request.user.member %}
-            <th class="col-md-1">Done</th>
+            <th class="">Done</th>
             {% endif %}
         </thead>
         {% for prob in prob_list %}
-        <tr class="clickable-row" onclick="rowClickHandler(this)" data-href="{% url "guide:problem" prob.id %}">
-            <td class="col-md-1 problem-grade" data="{{prob.grade}}"><div >{{prob.grade}}</div></td>
-            <td class="col-md-4">{{prob.sector.name}}</td>
+        <tr class="clickable-row problem-row" onclick="rowClickHandler(this)" data-href="{% url "guide:problem" prob.id %}">
+            <td class="grade-column problem-grade" data="{{prob.grade}}"><div>{{prob.grade}}</div></td>
+            <td class=""><div>{{prob.sector.name}}</div></td>
             {% if prob.artificialproblem %}
-            <td class="col-md-3">
-                {{prob.artificialproblem.holds}}
+            <td class="">
+                <div>{{prob.artificialproblem.holds}}</div>
             </td>
-            <td class="col-md-3">
-                {{prob.artificialproblem.date | default:"" }}
+            <td class="">
+                <div>{{prob.artificialproblem.date | default:"" }}</div>
             </td>
             {% elif prob.naturalproblem %}
-            <td class="col-md-6">
-                {{prob.naturalproblem.name}}
+            <td class="">
+                <div>{{prob.naturalproblem.name}}</div>
             </td>
             {% else %}
             {%endif%}
             {% if request.user.member %}
-            <td class="col-md-1">{% if request.user.member %} {% if request.user.member in prob.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{%endif %} {%else %}  {% endif %}</td>
+            <td class=""><div>{% if request.user.member %} {% if request.user.member in prob.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-done"></span>{% else %}<span class="glyphicon glyphicon-remove problem-member-notdone"></span>{%endif %} {%else %}  {% endif %}</div></td>
             {% endif %}
         </tr>
         {% endfor %}
