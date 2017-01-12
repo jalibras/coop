@@ -12,8 +12,6 @@ from members.models import Member
 class Area(models.Model,PermissionMixin):
     name=models.CharField(max_length=300,null=True,blank=True)
     description=models.TextField(null=True,blank=True)
-    #area_map_image=models.FileField(upload_to='uploads',null=True,blank=True)
-    #area_map_imagemap_snippet=models.TextField(null=True,blank=True)
     area_type=models.CharField(max_length=15,choices=(('natural','natural'),('artificial','artificial')),default='artificial')
     def video_count(self):
         return ProblemVideo.objects.filter(problem__area=self).count()
@@ -51,7 +49,7 @@ class BaseProblem(models.Model,PermissionMixin):
             ('7C+','7C+'),
             )
     grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True, help_text='We use the Font grading system for bouldering problems')
-    sector=models.ForeignKey('Sector',null=True,blank=True,help_text='See the area map to identify the correct sector name')
+    sector=models.ForeignKey('Sector',null=True,blank=True,help_text='See the area map to identify the correct sector name. If the problem crosses multiple sectors, use the sector of the first hold for your left hand.')
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
     approved=models.BooleanField(default=True)
