@@ -33,6 +33,7 @@ SECRET_KEY = 'z8opvv_h4s!t=m%@ip*reg@x9%_snhhy=229!gsi&6)4k0)qd='
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = False
+DEBUG = True
 if DJANGO_HOST=='dev':
     DEBUG = True
 
