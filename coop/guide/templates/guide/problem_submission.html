@@ -12,7 +12,9 @@
 
     {% csrf_token %}
 
+    <strong style="color:red;">
     {{ form.errors }}
+    </strong>
 
     {{ form | crispy }}
 

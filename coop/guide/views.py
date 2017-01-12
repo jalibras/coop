@@ -97,6 +97,8 @@ def submitproblem(request,**kwargs):
 
     if 'problem_id' in kwargs: # then we are updating an existing
         base_instance = BaseProblem.objects.get(id=kwargs.pop('problem_id'))
+        if request.user.member != base_instance.owner:
+            return HttpResponse("you can't mess around like that! You have to be the owner of the problem to edit it. I'm watching you {fn}...".format(fn=request.user.first_name))
         if hasattr(base_instance,'artificialproblem'):
             instance = base_instance.artificialproblem
             problem_type='artificial'
@@ -125,13 +127,9 @@ def submitproblem(request,**kwargs):
         formset = ProblemImageFormSet(request.POST,request.FILES,instance=instance)
         if form.is_valid():
 
-            if form.has_changed():
-                prob = form.save()
-                prob.owner=request.user.member
-                prob.save(force_update=True)
-            # now stop anyone trying to add a different owner
-            if prob.owner !=request.user.member:
-                raise ValueError('Woah!')
+            prob = form.save()
+            prob.owner=request.user.member
+            prob.save(force_update=True)
 
             formset.instance=prob
             if formset.is_valid():
