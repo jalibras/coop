@@ -12,6 +12,8 @@
 
     {% csrf_token %}
 
+    {{ form.errors }}
+
     {{ form | crispy }}
 
 <h3>Images for this problem</h3>

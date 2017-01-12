@@ -125,7 +125,7 @@ def submitproblem(request,**kwargs):
         formset = ProblemImageFormSet(request.POST,request.FILES,instance=instance)
         if form.is_valid():
 
-            if form.has_changes():
+            if form.has_changed():
                 prob = form.save()
                 prob.owner=request.user.member
                 prob.save(force_update=True)
