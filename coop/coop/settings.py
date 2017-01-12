@@ -33,7 +33,6 @@ SECRET_KEY = 'z8opvv_h4s!t=m%@ip*reg@x9%_snhhy=229!gsi&6)4k0)qd='
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = False
-DEBUG = True
 if DJANGO_HOST=='dev':
     DEBUG = True
 
@@ -153,7 +152,11 @@ STATICFILES_DIRS=[ os.path.join(BASE_DIR,'static'), ]
 
 
 MEDIA_URL='/media/'
-MEDIA_ROOT= os.path.join(BASE_DIR,'media')
+if DJANGO_HOST=='dev':
+    MEDIA_ROOT= os.path.join(BASE_DIR,'media')
+else:
+    MEDIA_ROOT= '/var/www/media'
+
 
 
 
