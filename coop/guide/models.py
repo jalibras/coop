@@ -89,19 +89,26 @@ class BaseProblem(models.Model,PermissionMixin):
 class ArtificialProblem(BaseProblem):
     date=models.DateField(null=True,blank=True)
     HOLDS_CHOICES = (
-            ('Red','Red'),
-            ('Green','Green'),
-            ('Blue','Blue'),
             ('Black','Black'),
-            ('White','White'),
+            ('Blue','Blue'),
+            ('Brown','Brown'),
+            ('Cappucino','Cappucino'),
+            ('Green','Green'),
+            ('Green (Dark)','Green (Dark)'),
+            ('Green (Flouro)','Green (Flouro)'),
+            ('Grey','Grey'),
+            ('Mint','Mint'),
+            ('Orange','Orange'),
             ('Pink','Pink'),
             ('Purple','Purple'),
-            ('Mint','Mint'),
-            ('Grey','Grey'),
-            ('Orange','Orange'),
+            ('Red','Red'),
+            ('Red (Dark)','Red (Dark)'),
+            ('Red (Rust)','Red (Rust)'),
+            ('White','White'),
+            ('Wooden','Wooden'),
             ('Yellow','Yellow'),
-            ('Brown','Brown'),
-            ('Other','Other'),
+            ('Yellow (Flouro)','Yellow (Flouro)'),
+            ('N/A (see description)','N/A (see description)'),
             )
     holds=models.CharField(max_length=300,null=True,blank=True,verbose_name='hold colour',choices=HOLDS_CHOICES)
     setter=models.CharField(max_length=300,null=True,blank=True)
