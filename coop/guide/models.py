@@ -50,16 +50,8 @@ class BaseProblem(models.Model,PermissionMixin):
             ('7C','7C'),
             ('7C+','7C+'),
             )
-    grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True)
-#    STEEPNESS_CHOICES = (
-#            ('slab','slab'),
-#            ('vertical','vertical'),
-#            ('slightly overhanging','slightly overhanging'),
-#            ('overhanging','overhanging'),
-#            ('extremely overhanging','extremely overhanging'),
-#            ('not applicable','not applicable'),
-#            )
-    sector=models.ForeignKey('Sector',null=True,blank=True)
+    grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True, help_text='We use the Font grading system for bouldering problems')
+    sector=models.ForeignKey('Sector',null=True,blank=True,help_text='See the area map to identify the correct sector name')
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
     approved=models.BooleanField(default=True)
@@ -87,7 +79,7 @@ class BaseProblem(models.Model,PermissionMixin):
 
 
 class ArtificialProblem(BaseProblem):
-    date=models.DateField(null=True,blank=True)
+    date=models.DateField(null=True,blank=True,help_text='The date on which the problem was set (if known)')
     HOLDS_CHOICES = (
             ('Black','Black'),
             ('Blue','Blue'),
