@@ -236,9 +236,9 @@ def get_problem_status(request,userid,problemid):
     m = User.objects.get(id = userid).member
     p = BaseProblem.objects.get(id=problemid)
     if m in p.done_by.all():
-        return HttpResponse('<span class="glyphicon glyphicon-ok problem-member-checkmark"></span>')
+        return HttpResponse('<span class="glyphicon glyphicon-ok problem-member-done"></span>')
     else:
-        return HttpResponse('<span class="glyphicon glyphicon-remove"></span>')
+        return HttpResponse('<span class="glyphicon glyphicon-remove problem-member-notdone"></span>')
 
 
 
