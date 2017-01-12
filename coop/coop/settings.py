@@ -36,6 +36,7 @@ DEBUG = False
 if DJANGO_HOST=='dev':
     DEBUG = True
 
+
 ALLOWED_HOSTS = ['galwayclimbing.pythonanywhere.com','jalibras.pythonanywhere.com','localhost','poincare.nuigalway.ie']
 
 
