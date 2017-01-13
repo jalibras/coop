@@ -9,7 +9,7 @@ from rest_framework import viewsets
 #from rest_framework.filters import SearchFilter
 
 from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,Sector,ProblemImage,ProblemVideo,Comment,ProblemByMember
-from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm
+from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm,ProblemImageInlineForm
 from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer, ProblemImageSerializer, AreaSerializer, SectorSerializer
 
 
@@ -112,7 +112,7 @@ def submitproblem(request,**kwargs):
             
 
 
-    ProblemImageFormSet=inlineformset_factory(BaseProblem,ProblemImage,fields=['image_file'],extra=2)
+    ProblemImageFormSet=inlineformset_factory(BaseProblem,ProblemImage,form=ProblemImageInlineForm, fields=['image_file'],extra=2,can_delete=True)
     if request.method=='POST':
         # prepolulate the form with defaults
         kws = { 'initial':{ k:request.GET.get(k) for k in request.GET}, }
