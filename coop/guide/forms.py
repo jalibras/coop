@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm
+from django.contrib.admin.widgets import AdminFileWidget
 
-from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment,Sector
+from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment,Sector,ProblemImage
 
 
 class ProblemByMemberForm(forms.Form):
@@ -83,6 +84,13 @@ class AddNaturalProblemForm(ModelForm):
         return cleaned_data
 
 
+
+class ProblemImageInlineForm(forms.ModelForm):
+    image_file = forms.FileField()
+
+    class Meta:
+        model = ProblemImage
+        fields = ('image_file',)
 
 
 
