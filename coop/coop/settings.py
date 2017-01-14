@@ -27,17 +27,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z8opvv_h4s!t=m%@ip*reg@x9%_snhhy=229!gsi&6)4k0)qd='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = False
+DEBUG = True
 if DJANGO_HOST=='dev':
     DEBUG = True
 
 
-ALLOWED_HOSTS = ['galwayclimbing.pythonanywhere.com','jalibras.pythonanywhere.com','localhost','poincare.nuigalway.ie']
+ALLOWED_HOSTS = ['galwayclimbing.pythonanywhere.com']
 
 
 # Application definition
@@ -175,12 +174,6 @@ LOGIN_REDIRECT_URL='/'
 # logout redirect URL
 LOGOUT_REDIRECT_URL='/home/'
 
-# email settings for gmail smtp 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "jamescruickshank1971@gmail.com"
-EMAIL_HOST_PASSWORD = "1m1o1y1n1e1"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 
 
 # Rest Framework settings
@@ -196,3 +189,6 @@ REST_FRAMEWORK = {
             'rest_framework.filters.OrderingFilter',
             ),
         }
+
+
+from coop.secret_settings import *
