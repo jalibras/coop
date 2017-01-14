@@ -39,7 +39,7 @@ def date_converter(date):
     return datetime.date(int(tmp[2]),int(d[tmp[1]]),int(tmp[0]))
 
 
-def import_artificial_problem(area_id,grade,sector_name,holds,comments,sit,date_text,owner_id=30,setter='unknown'):
+def import_artificial_problem(area_id,grade,sector_name,holds,comments,sit,date_text,owner_id=117,setter='unknown'):
     area = Area.objects.get(id=area_id)
     owner = Member.objects.get(id=owner_id)
     date=date_converter(date_text)
