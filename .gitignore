@@ -1,0 +1,10 @@
+*.pyc
+*.pyo
+
+*.sqlite3
+
+
+coop/db.sqlite3
+coop/db
+
+coop/coop/secret_settings.py
