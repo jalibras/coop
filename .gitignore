@@ -5,6 +5,6 @@
 
 
 coop/db.sqlite3
-coop/db
+coop/dbOLD
 
 coop/coop/secret_settings.py
