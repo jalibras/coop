@@ -16,12 +16,14 @@
     
     {% endif %}
     <p>
-    Click on a problem for a detailed description.
+    <h4>
+        Click on a problem for a detailed description.
+    </h4>
 
     <table class="table table-hover problem-list">
         <thead class="problem-list-header-row">
             <th class="grade-column"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></th>
-            <th class=""><a href="{{request.path}}?order_by={% if ob == "sector" %}-{% endif %}sector">Sector</a></th>
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "sector__name" %}-{% endif %}sector__name">Sector</a></th>
             {% if area.area_type == 'artificial' %}
             <th class=""><a href="{{request.path}}?order_by={% if ob == "artificialproblem__holds" %}-{% endif %}artificialproblem__holds">Hold colour</a></th>
             <th class=""><a href="{{request.path}}?order_by={% if ob == "artificialproblem__date" %}-{% endif %}artificialproblem__date">Date</a></th>

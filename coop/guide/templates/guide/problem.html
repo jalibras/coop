@@ -5,7 +5,7 @@
 {% block main %}
 
 
-{% if request.user.member.id == problem.owner.id %}
+{% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
 
     <a href="{% url "guide:update" problem.id %}" class="btn btn-primary" role="button">Edit this problem</a>
     <p>
