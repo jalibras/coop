@@ -36,6 +36,9 @@ router.register(r'areas',AreaViewSet)
 router.register(r'sectors',SectorViewSet)
 
 
+admin.site.site_header='Galway Climbing Co-op admin'
+admin.site.site_title='Galway Climbing Co-op admin'
+#admin.site.index_title='Galway Climbing Co-op admin'
 
 urlpatterns = [
     url(r'api/', include(router.urls)),
