@@ -37,3 +37,9 @@
     color:#aaa;
     font-size:large;
 }
+
+/* images */
+
+img {
+    image-orientation: from-image;
+}
