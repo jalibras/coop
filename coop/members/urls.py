@@ -4,7 +4,11 @@ from members import views
 
 
 # override the default login to implement remember me
-from django.contrib.auth.views import login,password_reset,password_change
+#from django.contrib.auth.views import login
+#from django.contrib.auth.views import login,password_reset,password_change
+
+from django.contrib.auth.views import password_reset
+
 
 
 

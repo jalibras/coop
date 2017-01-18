@@ -19,24 +19,12 @@ class User(AbstractUser):
                     'User with email: {em}, username: {un}, first_name:{fn}, last_name:{ln} useupdated a password'.format(em=self.email,un=self.username,fn=self.first_name,ln=self.last_name),
                     'galwayclimberscoop@gmail.com',
                     ['galwayclimberscoop@gmail.com'],
-                    fail_silently=True,
+                    fail_silently=True
                     )
         except:
             pass
         return result
 
-    def email_user(self,*args,**kwargs):
-        try:
-            send_mail(
-                    'user emailed',
-                    str(args)+'\n\n'+str(kwargs),
-                    'galwayclimberscoop@gmail.com',
-                    ['galwayclimberscoop@gmail.com'],
-                    fail_silently=True,
-                    )
-        except:
-            pass
-        return super(User,self).email_user(*args,**kwargs)
 
 
 class Member(models.Model):

@@ -26,6 +26,13 @@ from guide.views import area, ArtificialProblemViewSet,NaturalProblemViewSet,Pro
 
 from members.views import UserViewSet,MemberViewSet
 
+
+admin.site.site_header='Galway Climbing Co-op admin'
+admin.site.site_title='Galway Climbing Co-op admin'
+#admin.site.index_title='Galway Climbing Co-op admin'
+
+
+# django rest framework url routers for viewsets
 router = routers.DefaultRouter()
 router.register(r'artificialproblems',ArtificialProblemViewSet)
 router.register(r'naturalproblems',NaturalProblemViewSet)
@@ -36,9 +43,8 @@ router.register(r'areas',AreaViewSet)
 router.register(r'sectors',SectorViewSet)
 
 
-admin.site.site_header='Galway Climbing Co-op admin'
-admin.site.site_title='Galway Climbing Co-op admin'
-#admin.site.index_title='Galway Climbing Co-op admin'
+
+from django.contrib.auth.views import password_reset
 
 urlpatterns = [
     url(r'api/', include(router.urls)),
@@ -48,6 +54,6 @@ urlpatterns = [
     url(r'^guide/', include('guide.urls',namespace="guide")),
     url(r'^home/', include('homepage.urls',namespace="homepage")),
     url(r'^members/auth/', include('members.urls')),
+    # note that the (customised) templates for the auth views are in [BASE_DIR]/templates/registration
     url(r'^members/', include('members.urls',namespace="members")),
-#    url(r'^members/', include('members.urls',namespace="members")),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
