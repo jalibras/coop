@@ -15,7 +15,7 @@ import os
 
 import socket 
 
-if socket.gethostname().startswith('james'):
+if socket.gethostname()[:5] in ['james','poinc']:
     DJANGO_HOST='dev'
 else:
     DJANGO_HOST='production'
