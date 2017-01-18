@@ -31,9 +31,9 @@ You are logged in
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
     <input type="hidden" name="next" value="{{ next }}" />
-</form>
                                         {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p><a href="{% url 'password_reset' %}">Forgotten password?</a></p>
+</form>
 
 
 {% endif %}
