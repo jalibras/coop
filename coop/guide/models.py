@@ -115,8 +115,11 @@ class NaturalProblem(BaseProblem):
 
 
 class Sector(models.Model):
+    class Meta:
+        ordering = ('name',)
     name = models.CharField(max_length=200,null=True,blank=True)
     area = models.ForeignKey(Area,null=True,blank=True)
+
 
     def __str__(self):
         return "{ar}: {se}".format(ar=self.area.name,se=self.name)
