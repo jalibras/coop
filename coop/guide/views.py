@@ -82,9 +82,39 @@ def area(request,areaid=1):
         })
 
 
+def sector(request,sectorid=1):
+    """
+    view for homepage
+    """
+    sector = Sector.objects.get(id=sectorid)
+    ord_by = request.GET.get('order_by','grade')
+    prob_list = BaseProblem.objects.filter(sector=sector,approved=True,exists=True).order_by(ord_by)
+    arlist = Area.objects.all()
+    if hasattr(request.user,'member'):
+        member_context = {
+                'done':{p:p.problembymember_set.filter(member=request.user.member).count()!=0 for p in prob_list},
+                }
+    else:
+        member_context=None
+    return render(request,'guide/sector.html',{
+        'area':sector.area,
+        'sector':sector,
+        'arlist':arlist,
+        'prob_list':prob_list,
+        'ob':ord_by,
+        })
+
+
 def area_map(request,area_id):
     area = Area.objects.get(id = area_id)
-    return render(request,'guide/area_map.html',{
+    return render(request,'guide/clickable_area_map.html',{
+        'area':area,
+        })
+
+
+def clickable_area_map(request,area_id):
+    area = Area.objects.get(id = area_id)
+    return render(request,'guide/clickable_area_map.html',{
         'area':area,
         })
 

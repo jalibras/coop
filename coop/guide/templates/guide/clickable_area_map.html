@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block main %}
+
+
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/imageMapResizer.min.js' %}"></script>
+<script src="{% static 'js/jquery.imagemapster.js' %}"></script>
+<script>
+//window.onload{ function(){
+//    $('map').imageMapResize();
+//});
+</script>
+
+
+<h3>{{area.name}}</h3>
+
+<h4>Description</h4>
+
+{{area.description}}
+
+
+<h4>Map of Sectors</h4>
+
+    {% for ai in area.areaimage_set.all %}
+    <img width="100%" src ="{{ai.image_file.url}}" {% if ai.imagemap %}usemap="#imagemap{{ai.id}}"{% endif %}/><map name="imagemap{{ai.id}}">
+        {{ ai.imagemapcode | safe }}
+    </map>
+
+    {% endfor %}
+
+
+<script>
+//$('map').imageMapResize();
+$('img').mapster('resize',
+        function () {
+            return this.width
+        });
+$('img').mapster({
+    stroke: false,
+    render_highlight: {
+        strokeWidth: 2
+    },
+    fillColor:'ff0000',
+    fillOpacity: 0.3,
+    clickNavigate:true,
+
+});
+
+
+
+</script>
+
+{% endblock %}

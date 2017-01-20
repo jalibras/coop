@@ -20,8 +20,10 @@ class Area(models.Model,PermissionMixin):
 
 
 class AreaImage(models.Model,PermissionMixin):
-    area = models.ForeignKey(Area)
+    area = models.ForeignKey(Area,null=True,blank=True)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
+    imagemapcode = models.TextField(null=True,blank=True)
+    imagemap = models.FileField(upload_to='uploads',blank=True,null=True)
 
     def __str__(self):
         return "{ar}: {id}".format(ar=self.area.name,id=self.id)
@@ -120,7 +122,7 @@ class Sector(models.Model):
 
 
 class ProblemImage(models.Model,PermissionMixin):
-    problem = models.ForeignKey(BaseProblem)
+    problem = models.ForeignKey(BaseProblem,null=True)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
 
     # method for displaying in the admin 
@@ -148,8 +150,8 @@ class ProblemVideo(models.Model,PermissionMixin):
 
 
 class ProblemByMember(models.Model):
-    member = models.ForeignKey(Member,on_delete=models.CASCADE)
-    problem = models.ForeignKey(BaseProblem,on_delete=models.CASCADE)
+    member = models.ForeignKey(Member,on_delete=models.CASCADE,null=True)
+    problem = models.ForeignKey(BaseProblem,on_delete=models.CASCADE,null=True)
     date = models.DateField(null=True,blank=True)
 
 
