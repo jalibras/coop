@@ -112,11 +112,11 @@ def area_map(request,area_id):
         })
 
 
-def clickable_area_map(request,area_id):
-    area = Area.objects.get(id = area_id)
-    return render(request,'guide/clickable_area_map.html',{
-        'area':area,
-        })
+#def clickable_area_map(request,area_id):
+#    area = Area.objects.get(id = area_id)
+#    return render(request,'guide/clickable_area_map.html',{
+#        'area':area,
+#        })
 
 @user_passes_test(lambda u:hasattr(u,'member'))
 def submitproblem(request,**kwargs):

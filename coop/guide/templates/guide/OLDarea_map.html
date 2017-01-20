@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+
+
+<h3>{{area.name}}</h3> 
+
+<h4>Description</h4>
+
+{{area.description}}
+
+
+<h4>Map of Sectors</h4>
+
+    {% for ai in area.areaimage_set.all %}
+    <img width="100%" src ="{{ai.image_file.url}}"/>
+    {% endfor %}
+
+
+
+{% endblock %}

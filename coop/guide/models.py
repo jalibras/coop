@@ -53,7 +53,7 @@ class BaseProblem(models.Model,PermissionMixin):
             ('7C','7C'),
             ('7C+','7C+'),
             )
-    grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True, help_text='We use the Font grading system for bouldering problems')
+    grade=models.CharField(max_length=50,choices=FONT_GRADES,default='?',blank=True, help_text='We use the <a href="https://en.wikipedia.org/wiki/Grade_(bouldering)#Fontainebleau_grades" target="_blank">Font grading system</a> for bouldering problems')
     sector=models.ForeignKey('Sector',null=True,blank=True,help_text='See the area map to identify the correct sector name. If the problem crosses multiple sectors, use the sector of the first hold for your left hand.')
     description=models.TextField(blank=True,null=True)
     exists=models.BooleanField(default=True)
@@ -86,6 +86,7 @@ class ArtificialProblem(BaseProblem):
     HOLDS_CHOICES = (
             ('Black','Black'),
             ('Blue','Blue'),
+            ('Blue (Dark)','Blue (Dark)'),
             ('Brown','Brown'),
             ('Cappucino','Cappucino'),
             ('Green','Green'),

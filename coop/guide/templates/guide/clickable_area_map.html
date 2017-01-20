@@ -13,15 +13,18 @@
 
 
 <h3>{{area.name}}</h3>
+<p>
+<a class="btn btn-primary" href="{% url 'guide:area' area.id %}">All problems in this area</a>
 
-<h4>Description</h4>
 
+<p>
 {{area.description}}
 
 
-<h4>Map of Sectors</h4>
 {% if area.areaimage_set.all.1 %}
-<strong>Click on a sector in the image to a see a list of problems for that sector</strong>
+<h3>Interactive Map of Sectors: Click on a Sector</h3>
+{% else %}
+<h4>Map of Sectors</h4>
 {% endif %}
 
 
@@ -40,12 +43,14 @@ $('img').mapster('resize',
             return this.width
         });
 $('img').mapster({
-    stroke: false,
+    stroke: true,
     render_highlight: {
-        strokeWidth: 2
+        strokeWidth: 1,
+        fade: false
     },
-    fillColor:'ff0000',
-    fillOpacity: 0.3,
+    fillColor:'555555',
+    strokeColor:'555555',
+    fillOpacity: 0.5,
     clickNavigate:true,
 
 });

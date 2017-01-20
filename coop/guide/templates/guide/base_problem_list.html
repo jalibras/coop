@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+
+
+<div class="container">
+
+   <p>
+    <h4>
+        Click on a problem for a detailed description.
+    </h4>
+
+    <table class="table table-hover problem-list">
+        <thead class="problem-list-header-row">
+            <th class="grade-column"><a href="{{request.path}}?order_by={% if ob == "grade" %}-{% endif %}grade">Grade</a></th>
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "sector__name" %}-{% endif %}sector__name">Sector</a></th>
+            {% if area.area_type == 'artificial' %}
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "artificialproblem__holds" %}-{% endif %}artificialproblem__holds">Hold colour</a></th>
+            <th class=""><a href="{{request.path}}?order_by={% if ob == "artificialproblem__date" %}-{% endif %}artificialproblem__date">Date</a></th>
+            {% else %}
+            <th class=""><a href="{{request.path}}?order_by=naturalproblem__name">Name</a></th>
+            {% endif %}
+            {% if request.user.member %}
+            <th class="">Done</th>
+            {% endif %}
+        </thead>
+        {% for prob in prob_list %}
+        <tr class="clickable-row problem-row" onclick="rowClickHandler(this)" data-href="{% url "guide:problem" prob.id %}">
+            <td class="grade-column problem-grade" data="{{prob.grade}}"><div>{{prob.grade}}</div></td>
+            <td class=""><div>{{prob.sector.name}}</div></td>
+            {% if prob.artificialproblem %}
+            <td class="">
+                <div>{{prob.artificialproblem.holds}}</div>
+            </td>
+            <td class="">
+                <div>{{prob.artificialproblem.date | date:"d-m-Y" }}</div>
+            </td>
+            {% elif prob.naturalproblem %}
+            <td class="">
+                <div>{{prob.naturalproblem.name}}</div>
+            </td>
+            {% else %}
+            {%endif%}
+            {% if request.user.member %}
+            <td class=""><div>{% if request.user.member %} {% if request.user.member in prob.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-done"></span>{% else %}<span class="glyphicon glyphicon-remove problem-member-notdone"></span>{%endif %} {%else %}  {% endif %}</div></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+
+<script src="{% static "js/area.js" %}"></script>
+
+{% endblock %}
+
+
+

@@ -44,13 +44,15 @@ router.register(r'sectors',SectorViewSet)
 
 
 
-from django.contrib.auth.views import password_reset
+from guide.views import area_map
+
+
 
 urlpatterns = [
     url(r'api/', include(router.urls)),
     url(r'api-auth/',include('rest_framework.urls',namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$',area),
+    url(r'^$',area_map,{'area_id':1}),
     url(r'^guide/', include('guide.urls',namespace="guide")),
     url(r'^home/', include('homepage.urls',namespace="homepage")),
     url(r'^members/auth/', include('members.urls')),
