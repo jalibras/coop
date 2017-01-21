@@ -21,8 +21,8 @@ class AreaAdmin(admin.ModelAdmin):
     pass
 
 class ArtificialProblemAdmin(admin.ModelAdmin):
-    list_filter = ('area','grade','sector')
-    list_display = ('area','grade','holds','sector')
+    list_filter = ('exists','approved','area','grade','sector','owner')
+    list_display = ('area','grade','holds','sector','owner')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
 
 

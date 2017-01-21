@@ -128,6 +128,8 @@ class Sector(models.Model):
 class ProblemImage(models.Model,PermissionMixin):
     problem = models.ForeignKey(BaseProblem,null=True)
     image_file = models.FileField(upload_to='uploads',blank=True,null=True)
+    def __str__(self):
+        return "Problem {pr}: {id}".format(pr=self.problem.id, id =self.id)
 
     # method for displaying in the admin 
     def display(self):
