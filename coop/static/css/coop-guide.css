@@ -38,6 +38,13 @@
     font-size:large;
 }
 
+.done-by-count {
+    font-size:small;
+    vertical-align:20%;
+}
+
+
+
 /* images */
 
 img {

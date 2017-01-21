@@ -39,7 +39,7 @@ if DJANGO_HOST=='dev':
 
 
 
-ALLOWED_HOSTS = ['galwayclimbing.pythonanywhere.com']
+ALLOWED_HOSTS = ['galwayclimbing.pythonanywhere.com','localhost']
 
 
 # Application definition

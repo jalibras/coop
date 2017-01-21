@@ -45,7 +45,7 @@
             {% else %}
             {%endif%}
             {% if request.user.member %}
-            <td class=""><div>{% if request.user.member %} {% if request.user.member in prob.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-done"></span>{% else %}<span class="glyphicon glyphicon-remove problem-member-notdone"></span>{%endif %} {%else %}  {% endif %}</div></td>
+            <td class=""><div><span class="done-by-count">({{prob.done_by.all.count}})</span> {% if request.user.member %} {% if request.user.member in prob.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-done"></span>{% else %}<span class="glyphicon glyphicon-remove problem-member-notdone"></span>{%endif %} {%else %}  {% endif %}</div></td>
             {% endif %}
         </tr>
         {% endfor %}
