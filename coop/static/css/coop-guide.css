@@ -43,6 +43,14 @@
     vertical-align:20%;
 }
 
+/* styles for problem detail page */
+.problem-actions {
+    font-size:200%;
+}
+
+.problem-flag-link {
+    color:#ff0000;
+}
 
 
 /* images */

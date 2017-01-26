@@ -4,23 +4,15 @@
 
 {% block main %}
 
+
+<div class="problem-actions">
+    {% if request.user.member %} {% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
+    <a href = "{% url 'guide:update' problem.id %}" class = "problem-update-link" data-toggle="tooltip" data-placement="bottom" title="Edit this problem"><span class="glyphicon glyphicon-edit"></span></a>
+    {% endif %}{% endif %}
+    <a href = "{% url 'guide:problem_flag' problem.id %}" class = "problem-flag-link" data-toggle="tooltip" data-placement="bottom" title="Flag an issue with this problem"><span class="glyphicon glyphicon-flag"></span></a>
+</div>
 <p>
-<a href = "{% url 'guide:problem_flag' problem.id %}" class = "btn btn-danger">Flag this problem</a>
-<p>
-<strong>Only for serious issues such as missing/loose holds or a completely misleading  description. For minor issues (e.g.
-    incorrect grading) using the comment box below)</strong>
-<p>
-<hr>
-{% if request.user.member %}
 
-{% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
-
-    <a href="{% url "guide:update" problem.id %}" class="btn btn-primary" role="button">Edit this problem</a>
-    <p>
-
-{% endif %}
-
-{% endif %}
 
 
 {% if request.user.member %}
@@ -163,6 +155,7 @@ No videos have been posted for this problem
 <p>Log in to post a video for this problem.
 
 {% endif %}
+
 
 
 
