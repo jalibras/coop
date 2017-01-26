@@ -66,7 +66,7 @@ def area(request,areaid=1):
     """
     area = Area.objects.get(id=areaid)
     ord_by = request.GET.get('order_by','grade')
-    prob_list = BaseProblem.objects.filter(area=area,approved=True,exists=True).order_by(ord_by)
+    prob_list = BaseProblem.objects.filter(area=area).order_by(ord_by)
     arlist = Area.objects.all()
     if hasattr(request.user,'member'):
         member_context = {
@@ -255,9 +255,8 @@ def problem_flag(request,problem_id):
             flag = form.save(commit=False)
             flag.problem = problem
             flag.save()
-            problem.approved=False
-            problem.save()
             return render(request,'guide/problem_flag.html',{
+                'problem':problem,
                 'problem_id':problem_id,
                 'submission_accepted':True,
                 })

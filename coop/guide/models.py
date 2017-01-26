@@ -62,6 +62,12 @@ class BaseProblem(models.Model,PermissionMixin):
     owner=models.ForeignKey(Member,null=True,blank=True,related_name='owned_problem_set')
     done_by = models.ManyToManyField(Member,blank=True)
 
+    def visible(self):
+    # returns a Boolean 
+        unresolved_flags = self.problemflag_set.filter(resolved=False)
+        return unresolved_flags.count()==0 and self.exists and self.approved
+
+
     def __str__(self):
         return str(self.id)
 # methods for embedding media in the admin
