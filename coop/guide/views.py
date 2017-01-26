@@ -3,6 +3,8 @@ from django.forms import inlineformset_factory, ValidationError
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.urls import reverse
+from django.core.mail import send_mail
+from django.utils.html import mark_safe,format_html
 
 
 from rest_framework import viewsets
@@ -227,8 +229,29 @@ def problem(request,id):
                     comment.member=request.user.member
                 except:
                     pass
-    
+
+                
                 comment.save()
+                
+                try:
+                    message = format_html(mark_safe(""" Hi {ownerfn}, \n{fn} {ln} has posted a comment on a problem that you submitted to the co-op database. \n \n See all comments on this problem at http://galwayclimbing.pythonanywhere.com{url} """),
+                            ownerfn=problem.owner.user.first_name, 
+                            fn=request.user.first_name, 
+                            ln=request.user.last_name, 
+                            url=reverse('guide:problem',args=[problem.id])
+                        )
+                    to = problem.owner.user.email
+                    subject='Someone posted a comment on one of your problems at the coop'
+                    send_mail(
+                            subject,
+                            message,
+                            'galwayclimberscoop@gmail.com',
+                            [to]
+                            )
+                except:
+                    pass
+
+
                 return HttpResponseRedirect(request.path)
                 #return HttpResponse('Video link saved with id = {id}'.format(id=vid.id))
             else:

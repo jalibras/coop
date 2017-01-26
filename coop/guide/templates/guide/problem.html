@@ -74,16 +74,6 @@
 {% endif %}
 
 
-{% if problem.pictures %}
-
-<h3>Pictures</h3>
-
-
-{{ problem.pictures }}
-
-
-{% endif %}
-
 <h3>Comments</h3>
 
 {% if problem.comment_set.all.count > 0 %}
@@ -122,6 +112,16 @@ Be the first to comment on this problem
 
 {% endif %}
 
+
+{% if problem.pictures %}
+
+<h3>Pictures</h3>
+
+
+{{ problem.pictures }}
+
+
+{% endif %}
 
 
 <h3>Videos</h3>

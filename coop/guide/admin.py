@@ -45,3 +45,6 @@ admin.site.register(AreaImage)
 admin.site.register(ProblemImage)
 admin.site.register(ProblemFlag,ProblemFlagAdmin)
 admin.site.register(ProblemByMember)
+admin.site.register(Comment)
+admin.site.register(ProblemVideo)
+

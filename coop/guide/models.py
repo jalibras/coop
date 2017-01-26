@@ -153,6 +153,9 @@ class Comment(models.Model,PermissionMixin):
     text = models.TextField()
     problem = models.ForeignKey(BaseProblem,null=True,blank=True)
     member = models.ForeignKey(Member,null=True,blank=True)
+
+    def __str__(self):
+        return self.text
  
 class ProblemVideo(models.Model,PermissionMixin):
     embed_code = models.CharField(max_length=1000)
