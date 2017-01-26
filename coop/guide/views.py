@@ -254,6 +254,7 @@ def problem_flag(request,problem_id):
             problem = BaseProblem.objects.get(id=problem_id)
             flag = form.save(commit=False)
             flag.problem = problem
+            flag.member=request.user.member
             flag.save()
             return render(request,'guide/problem_flag.html',{
                 'problem':problem,
