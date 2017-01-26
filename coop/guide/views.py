@@ -233,23 +233,24 @@ def problem(request,id):
                 
                 comment.save()
                 
-                try:
-                    message = format_html(mark_safe(""" Hi {ownerfn}, \n{fn} {ln} has posted a comment on a problem that you submitted to the co-op database. \n \n See all comments on this problem at http://galwayclimbing.pythonanywhere.com{url} """),
-                            ownerfn=problem.owner.user.first_name, 
-                            fn=request.user.first_name, 
-                            ln=request.user.last_name, 
-                            url=reverse('guide:problem',args=[problem.id])
-                        )
-                    to = problem.owner.user.email
-                    subject='Someone posted a comment on one of your problems at the coop'
-                    send_mail(
-                            subject,
-                            message,
-                            'galwayclimberscoop@gmail.com',
-                            [to]
+                if problem.owner.notifications:
+                    try:
+                        message = format_html(mark_safe(""" Hi {ownerfn}, \n{fn} {ln} has posted a comment on a problem that you submitted to the co-op database. \n \n See all comments on this problem at http://galwayclimbing.pythonanywhere.com{url} """),
+                                ownerfn=problem.owner.user.first_name, 
+                                fn=request.user.first_name, 
+                                ln=request.user.last_name, 
+                                url=reverse('guide:problem',args=[problem.id])
                             )
-                except:
-                    pass
+                        to = problem.owner.user.email
+                        subject='Someone posted a comment on one of your problems at the coop'
+                        send_mail(
+                                subject,
+                                message,
+                                'galwayclimberscoop@gmail.com',
+                                [to]
+                                )
+                    except:
+                        pass
 
 
                 return HttpResponseRedirect(request.path)
