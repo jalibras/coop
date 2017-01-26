@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block main %}
+
+{% if submission_accepted %}
+
+The problem has been flagged and will not be visible to users until the issue has been dealt with 
+
+<p>
+<a class="btn btn-primary" href="{% url "guide:problem" problem_id %}">Continue</a>
+
+
+
+{% else %}
+<strong>
+Are you sure you want to do this? If the issue is minor e.g. you disagree with the grade, just make a comment rather than
+flagging the problem. If you flag this problem, it will not be visible to any users until the issue has been resolved.
+</strong>
+
+<p>
+<form method="post">
+
+{% csrf_token %}
+
+{{ form | crispy }}
+
+<p>
+<strong>
+Are you sure you want to do this? If the issue is minor e.g. you disagree with the grade, just make a comment rather than
+flagging the problem. If you flag this problem, it will not be visible to any users until the issue has been resolved.
+</strong>
+<p>
+<a class="btn btn-primary" href="{% url "guide:problem" problem_id %}">Cancel</a>
+<p>
+<input type="submit" class = "btn btn-danger" value="Flag this problem">
+
+</form>
+
+
+{% endif %}
+
+
+
+
+
+{% endblock %}
+
+

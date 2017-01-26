@@ -6,6 +6,9 @@
 
 {% block main %}
 
+
+
+
 {{form.media}}
 
 <form method="post" enctype="multipart/form-data">
@@ -24,6 +27,7 @@ identify the problem and will also help us to easily identify which problems are
 current.
 <p>
 {{ fs|crispy }}
+
 
 <input type="hidden" name="problem_type" value = "{{problem_type}}"/>
 

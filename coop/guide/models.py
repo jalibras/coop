@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 from django.utils.html import format_html
 
 from members.mixins import PermissionMixin
@@ -151,6 +152,29 @@ class ProblemVideo(models.Model,PermissionMixin):
     embed_code = models.CharField(max_length=1000)
     problem = models.ForeignKey(BaseProblem,null=True,blank=True)
     member = models.ForeignKey(Member,null=True,blank=True) 
+
+
+
+class ProblemFlag(models.Model):
+    problem = models.ForeignKey(BaseProblem,null=True,blank=True)
+    ISSUE_CHOICES = (
+            ('no longer exists','no longer exists'),
+            ('description is inaccurate/unclear','description is inaccurate/unclear'),
+            ('loose hold(s)','loose hold(s)'),
+            ('other (give a description)','other (give a description)'),
+            )
+    issue = models.CharField(max_length=100,choices=ISSUE_CHOICES)
+    decription = models.TextField(null=True,blank=True,help_text='a short description of the issue')
+    member = models.ForeignKey(Member,null=True,blank=True) 
+    resolved = models.BooleanField(default=False)
+    created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        try:
+            return "id: {id}, {issue}".format(id=self.id,issue=self.issue)
+        except:
+            return "id: {id}, {issue}".format(id=self.id,issue='None')
+
 
 
 

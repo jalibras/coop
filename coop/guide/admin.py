@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.utils.html import format_html
 
-from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,AreaImage,ProblemVideo,Comment,Sector,ProblemByMember
+from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,AreaImage,ProblemVideo,Comment,Sector,ProblemByMember,ProblemFlag
 
 # Register your models here.
 
@@ -32,6 +32,9 @@ class NaturalProblemAdmin(admin.ModelAdmin):
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
 
 
+class ProblemFlagAdmin(admin.ModelAdmin):
+    list_display= ('id','problem','issue','resolved','created')
+    list_filter = ('issue','resolved')
 
 
 admin.site.register(ArtificialProblem,ArtificialProblemAdmin)
@@ -40,4 +43,5 @@ admin.site.register(Area,AreaAdmin)
 admin.site.register(Sector)
 admin.site.register(AreaImage)
 admin.site.register(ProblemImage)
+admin.site.register(ProblemFlag,ProblemFlagAdmin)
 admin.site.register(ProblemByMember)

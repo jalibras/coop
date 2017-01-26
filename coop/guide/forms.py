@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.admin.widgets import AdminFileWidget
 
-from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment,Sector,ProblemImage
+from guide.models import NaturalProblem,ArtificialProblem,ProblemVideo,Comment,Sector,ProblemImage,ProblemFlag
 
 
 class ProblemByMemberForm(forms.Form):
@@ -93,4 +93,8 @@ class ProblemImageInlineForm(forms.ModelForm):
         fields = ('image_file',)
 
 
+class ProblemFlagForm(forms.ModelForm):
+    class Meta:
+        model = ProblemFlag
+        exclude = ('problem','member','resolved','created')
 

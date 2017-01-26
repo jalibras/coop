@@ -4,11 +4,21 @@
 
 {% block main %}
 
+<p>
+<a href = "{% url 'guide:problem_flag' problem.id %}" class = "btn btn-danger">Flag this problem</a>
+<p>
+<strong>Only for serious issues such as missing/loose holds or a completely misleading  description. For minor issues (e.g.
+    incorrect grading) using the comment box below)</strong>
+<p>
+<hr>
+{% if request.user.member %}
 
 {% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
 
     <a href="{% url "guide:update" problem.id %}" class="btn btn-primary" role="button">Edit this problem</a>
     <p>
+
+{% endif %}
 
 {% endif %}
 

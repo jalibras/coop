@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^problem/getstatus/(?P<userid>[0-9]+)/(?P<problemid>[0-9]+)',views.get_problem_status,name="getstatus"),
     url(r'^submit/(?P<problem_type>(natural)|(artificial))',views.submitproblem,name="submit"),
     url(r'^update/(?P<problem_id>\d+)',views.submitproblem,name="update"),
+    url(r'^problem_flag/(?P<problem_id>\d+)',views.problem_flag,name="problem_flag"),
     url(r'^artificialproblems/',ArtificialProblemList.as_view()),
 
     ]

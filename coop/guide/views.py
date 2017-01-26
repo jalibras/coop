@@ -9,7 +9,7 @@ from rest_framework import viewsets
 #from rest_framework.filters import SearchFilter
 
 from guide.models import BaseProblem,ArtificialProblem,NaturalProblem,Area,Sector,ProblemImage,ProblemVideo,Comment,ProblemByMember
-from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm,ProblemImageInlineForm
+from guide.forms import ProblemVideoForm,CommentForm,AddArtificialProblemForm,AddNaturalProblemForm,ProblemByMemberForm,ProblemImageInlineForm,ProblemFlagForm
 from guide.serializers import ArtificialProblemSerializer, NaturalProblemSerializer, ProblemImageSerializer, AreaSerializer, SectorSerializer
 
 
@@ -138,6 +138,7 @@ def submitproblem(request,**kwargs):
     else: # then we must have a problem_type kwarg
         instance = None
         problem_type = kwargs.pop('problem_type')
+        print(problem_type)
 
             
 
@@ -185,7 +186,8 @@ def submitproblem(request,**kwargs):
         formset = ProblemImageFormSet(instance=instance)
 
     return render(request,'guide/problem_submission.html',{
-                'problem_type':'natural',
+                'instance':instance,
+                'problem_type':problem_type,
                 'form':form,
                 'fs':formset,
                 })
@@ -242,6 +244,30 @@ def problem(request,id):
         'commentform':commentform,
         })
 
+
+
+@user_passes_test(lambda u:hasattr(u,'member'))
+def problem_flag(request,problem_id):
+    if request.method=='POST':
+        form = ProblemFlagForm(request.POST)
+        if form.is_valid():
+            problem = BaseProblem.objects.get(id=problem_id)
+            flag = form.save(commit=False)
+            flag.problem = problem
+            flag.save()
+            problem.approved=False
+            problem.save()
+            return render(request,'guide/problem_flag.html',{
+                'problem_id':problem_id,
+                'submission_accepted':True,
+                })
+    else:
+        form = ProblemFlagForm()
+        return render(request,'guide/problem_flag.html',{
+            'problem_id':problem_id,
+            'submission_accepted':False,
+            'form':form,
+            })
 
 
 # views to handle AJAX requests
