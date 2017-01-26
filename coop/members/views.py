@@ -2,6 +2,9 @@ from django.shortcuts import render
 
 from django.contrib.auth.decorators import user_passes_test
 
+from guide.models import ArtificialProblem
+
+
 
 # Create your views here.
 
@@ -30,3 +33,13 @@ class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
     
+
+
+@user_passes_test(lambda u:hasattr(u,'member'))
+def my_artificial_problems(request):
+    order_by = request.GET.get('order_by','grade')
+    queryset = ArtificialProblem.objects.filter(owner=request.user.member).order_by(order_by)
+    return render(request,'members/my_artificial_problems.html',{
+        'queryset':queryset,
+        'ob':order_by,
+        })

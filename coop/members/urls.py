@@ -18,5 +18,6 @@ urlpatterns = [
     #url(r'password_change',password_change,{'template_name':'registration/my_password_change_form.html'}),
     url(r'^',include('django.contrib.auth.urls')),
     url(r'^profile/',views.profile,name='profile'),
+    url(r'^my_artificial_problems/',views.my_artificial_problems,name='my_artificial_problems'),
     ]
 
