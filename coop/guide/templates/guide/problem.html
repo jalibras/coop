@@ -6,12 +6,12 @@
 
 
 <div class="problem-actions">
-    {% if request.user.member %} 
     {% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
     <a href = "{% url 'guide:update' problem.id %}" class = "problem-update-link" data-toggle="tooltip" data-placement="bottom" title="Edit this problem"><span class="glyphicon glyphicon-edit"></span></a>
     {% endif %}
     <a href = "#" id = "comment-popover-button" data-toggle="popover" data-placement="bottom"><span class="glyphicon glyphicon-comment"></span></a>
     <div id="comment-popover-content" class="hide">
+        {% if request.user.member %}
         <form method="post">
             {% csrf_token %}
             {{ commentform.text }}
@@ -19,8 +19,10 @@
         <input type="hidden" name="post-type" value="comment"/>
         <input type="submit" class="btn btn-primary" value="Post comment"/>
         </form>
+        {% else %}
+        Log in to post a comment.
+        {% endif %}
     </div>
-    {% endif %}
     <a href = "{% url 'guide:problem_flag' problem.id %}" class = "problem-flag-link" data-toggle="tooltip" data-placement="bottom" title="Flag an issue with this problem"><span class="glyphicon glyphicon-flag"></span></a>
 </div>
 <p>
