@@ -29,8 +29,8 @@
         </thead>
         {% for prob in prob_list %}
         {% if prob.visible %}
-        <tr class="clickable-row problem-row" onclick="rowClickHandler(this)" data-href="{% url "guide:problem" prob.id %}">
-            <td class="grade-column problem-grade" data="{{prob.grade}}"><div>{{prob.grade}}</div></td>
+        <tr class="clickable-row problem-row" onclick="rowClickHandler(this)" data-href="{% url "guide:problem" prob.id %}" title="{{prob.description}}">
+            <td class="grade-column problem-grade" data="{{prob.grade}}"><div><strong>{{prob.grade}}</strong></div></td>
             <td class=""><div>{{prob.sector.name}}</div></td>
             {% if prob.artificialproblem %}
             <td class="">
