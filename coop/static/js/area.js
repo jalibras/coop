@@ -11,14 +11,14 @@ function gradeColorCode(){
     for (var i=0;i<probs.length;i++) {
 
         if (easyGrades.indexOf(probs[i].getAttribute("data"))>=0){
-            probs[i].style.backgroundColor="#4c4";
+            probs[i].style.color="#0a0";
         } else if (mediumGrades.indexOf(probs[i].getAttribute("data"))>=0){
-            probs[i].style.backgroundColor="#F0B020";
+            probs[i].style.color="#eeb700";
         } else if (hardGrades.indexOf(probs[i].getAttribute("data"))>=0){
-            probs[i].style.backgroundColor="#F03030";
+            probs[i].style.color="#F01020";
         }
         else {
-            probs[i].style.backgroundColor="grey";
+            probs[i].style.color="grey";
         }
     }
 }
