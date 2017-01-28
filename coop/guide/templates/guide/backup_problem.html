@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main %}
+
+
+<div class="problem-actions">
+    {% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
+    <a href = "{% url 'guide:update' problem.id %}" class = "problem-update-link" data-toggle="tooltip" data-placement="bottom" title="Edit this problem"><span class="glyphicon glyphicon-edit"></span></a>
+    {% endif %}
+    <!--comment box popover -->
+    <a href = "#" id = "coop-popover-comment-button" data-toggle="popover" data-placement="bottom" popover-content-target="comment-popover-content"><span class="glyphicon glyphicon-comment"></span></a>
+    <div id="comment-popover-content" class="hide">
+
+        {% if problem.comment_set.all.count > 0 %}
+        {% for v in problem.comment_set.all %}
+        <p><strong>{{v.member.user.get_full_name}}:</strong> {{v.text }}
+        {% endfor %}
+
+        {% else %}
+        Be the first to comment on this problem
+        <p>
+
+        {% endif %}
+
+        {% if request.user.member %}
+        <form method="post">
+            {% csrf_token %}
+            {{ commentform.text }}
+        <p>
+        <input type="hidden" name="post-type" value="comment"/>
+        <input type="submit" class="btn btn-primary" value="Post comment"/>
+        </form>
+        {% else %}
+        Log in to post a comment.
+        {% endif %}
+    </div>
+    <!-- images popover -->
+    <a href = "#" id = "coop-popover-images-button" data-toggle="popover" data-placement="bottom" popover-content-target="images-popover-content"><span class="glyphicon glyphicon-picture"></span></a>
+    <div id="images-popover-content" class="hide">
+        {% if problem.pictures %}
+        {{ problem.pictures }}
+        {% else %}
+        No images available for this problem.
+        {% endif %}
+    </div>
+    <!--flag link-->
+    <a href = "{% url 'guide:problem_flag' problem.id %}" class = "problem-flag-link" data-toggle="tooltip" data-placement="bottom" title="Flag an issue with this problem"><span class="glyphicon glyphicon-flag"></span></a>
+</div>
+<p>
+
+<p>
+
+
+
+<div class="problem-actions">
+    {% if request.user.member.id == problem.owner.id or problem.owner.id == 117  %}
+    <a href = "{% url 'guide:update' problem.id %}" class = "problem-update-link" data-toggle="tooltip" data-placement="bottom" title="Edit this problem"><span class="glyphicon glyphicon-edit"></span></a>
+    {% endif %}
+    <!-- comments modal -->
+    <a  data-toggle="modal" data-target="#comment-modalContent"><span class="glyphicon glyphicon-comment"></span></a>
+    <div id="comment-modalContent" class="modal fade" tabindex="-1">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">>Images for this problem</h4>
+
+            </div>
+            <div class="modal-body">
+                {% if problem.comment_set.all.count > 0 %}
+                {% for v in problem.comment_set.all %}
+                <p><strong>{{v.member.user.get_full_name}}:</strong> {{v.text }}
+                {% endfor %}
+    
+                {% else %}
+                Be the first to comment on this problem
+                <p>
+    
+                {% endif %}
+    
+                {% if request.user.member %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ commentform.text }}
+                    <p>
+                    <input type="hidden" name="post-type" value="comment"/>
+                    <input type="submit" class="btn btn-primary" value="Post comment"/>
+                </form>
+                {% else %}
+                Log in to post a comment.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- images modal -->
+    <a  data-toggle="modal" data-target="#images-modal-content"><span class="glyphicon glyphicon-picture"></span></a>
+    <div id="images-modal-content" class="modal fade" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            {% if problem.pictures %}
+            {{ problem.pictures }}
+            {% else %}
+            No images available for this problem.
+            {% endif %}
+        </div>
+    </div>
+    <!--flag link-->
+    <a href = "{% url 'guide:problem_flag' problem.id %}" class = "problem-flag-link" data-toggle="tooltip" data-placement="bottom" title="Flag an issue with this problem"><span class="glyphicon glyphicon-flag"></span></a>
+</div>
+<p>
+<p>
+
+
+
+{% if request.user.member %}
+
+<h3>Done this one?</h3>
+
+
+<script src="{% static "js/problem.js" %}">
+</script>
+<p class="status-element">
+{% if request.user.member in problem.done_by.all %}<span class="glyphicon glyphicon-ok problem-member-done"></span>{% else %}<span class="glyphicon glyphicon-remove problem-member-notdone"></span>{%endif %}
+</p>
+<span class="btn btn-primary"  onclick="toggleStatus({{request.user.id}},{{problem.id}})">Toggle done/not done</span>
+
+{% endif %}
+
+
+<h3>Problem Info</h3>
+{% if problem.artificialproblem %}
+<dl>
+    <dt>Sector</dt>
+    <dd>{{problem.sector}}</dd>
+    <dt>Hold colour</dt>
+    <dd>{{problem.artificialproblem.holds}}</dd>
+    <dt>Description</dt>
+    <dd>{{problem.description}}</dd>
+    <dt>Grade</dt> 
+    <dd>{{problem.grade}}</dd>
+    <dt>Date</dt>
+    <dd>{{problem.artificialproblem.date}}</dd>
+    <dt>Setter</dt>
+    <dd>{{problem.artificialproblem.setter}}</dd>
+</dl>
+{% elif problem.naturalproblem %}
+<dl>
+    <dt>Sector</dt>
+    <dd>{{problem.sector}}</dd>
+    <dt>Name</dt>
+    <dd>{{problem.naturalproblem.name}}</dd>
+    <dt>Description</dt>
+    <dd>{{problem.description}}</dd>
+    <dt>Grade</dt> 
+    <dd>{{problem.grade}}</dd>
+    <dt>Rock Type</dt>
+    <dd>{{problem.naturalproblem.rock_type}}</dd>
+    <dt>First Ascensionist</dt>
+    <dd>{{problem.naturalproblem.first_ascensionist}}</dd>
+</dl>
+{%else %}
+{{ problem.description }}
+{% endif %}
+
+
+<h3>Comments</h3>
+
+{% if problem.comment_set.all.count > 0 %}
+{% for v in problem.comment_set.all %}
+<p><strong>{{v.member.user.get_full_name}}:</strong> {{v.text }}
+{% endfor %}
+
+{% else %}
+Be the first to comment on this problem
+<p>
+
+{% endif %}
+
+{% if request.user.member %}
+{% else %}
+<p>Log in to comment on this problem.
+{% endif %}
+
+
+{% if problem.pictures %}
+
+<h3>Pictures</h3>
+
+
+{{ problem.pictures }}
+
+
+{% endif %}
+
+
+<h3>Videos</h3>
+
+{% if problem.problemvideo_set.all.count > 0 %}
+
+{% for v in problem.problemvideo_set.all %}
+
+<p>Posted at 
+<p>{{v.embed_code | safe }}
+
+
+{% endfor %}
+
+{% else %}
+
+No videos have been posted for this problem
+
+{% endif %}
+
+{% if request.user.member %}
+
+<p> To post a video for this problem, copy/paste the embed code into the form below
+
+<form method="post">
+
+    {% csrf_token %}
+
+{{ videoform.embed_code }}
+<p>
+<p>
+<input type="hidden" name="post-type" value="video"/>
+<input type="submit" class="btn btn-primary" value="Post"/>
+
+</form>
+
+{% else %}
+
+<p>Log in to post a video for this problem.
+
+{% endif %}
+
+
+
+
+
+{% endblock %}
