@@ -1,6 +1,8 @@
 from django.shortcuts import render
-
 from django.contrib.auth.decorators import user_passes_test
+
+from rest_framework.permissions import IsAdminUser
+
 
 from guide.models import ArtificialProblem
 
@@ -25,11 +27,13 @@ def profile(request):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAdminUser,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
 
 class MemberViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAdminUser,)
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
     
