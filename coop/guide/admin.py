@@ -1,7 +1,8 @@
 from django.contrib import admin
+from django.urls import reverse
 
 from django.conf import settings
-from django.utils.html import format_html
+from django.utils.html import format_html,mark_safe
 
 from guide.models import ArtificialProblem,NaturalProblem,Area,ProblemImage,AreaImage,ProblemVideo,Comment,Sector,ProblemByMember,ProblemFlag
 
@@ -20,10 +21,40 @@ class ProblemVideoInline(admin.StackedInline):
 class AreaAdmin(admin.ModelAdmin):
     pass
 
+
+
+class FlagFilter(admin.SimpleListFilter):
+    title = 'has_flag'
+    parameter_name = 'flag'
+
+    def lookups(self, request, model_admin):
+        return [('True','True'),('False','False')]
+
+    def queryset(self,request,queryset):
+        if self.value():
+            id_list = [ p.id for p in queryset if str(p.has_unresolved_flag())==self.value()]
+            return queryset.filter(id__in=id_list)
+        else:
+            return queryset
+
+
+
 class ArtificialProblemAdmin(admin.ModelAdmin):
-    list_filter = ('exists','approved','area','grade','sector','owner')
-    list_display = ('area','grade','holds','sector','owner')
+    list_filter = ('exists','approved','area','grade','sector','owner',FlagFilter)
+    list_display = ('area','grade','holds','sector','owner','links_to_flags')
     inlines = [ProblemImageInline,CommentInline,ProblemVideoInline]
+    def links_to_flags(self,obj):
+        urfs = obj.problemflag_set.filter(resolved=False)
+        if urfs.count() == 0:
+            return 'None'
+        else: 
+            lnks = [ "<a href = '{l}'>link</a>".format(l=reverse('admin:guide_problemflag_change',args=(fl.id,))) for fl in urfs]
+
+            return mark_safe(",".join(lnks))
+
+    def has_flag(self,obj):
+        return  obj.problemflag_set.filter(resolved=False).count >0
+
 
 
 class NaturalProblemAdmin(admin.ModelAdmin):

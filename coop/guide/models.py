@@ -62,6 +62,13 @@ class BaseProblem(models.Model,PermissionMixin):
     owner=models.ForeignKey(Member,null=True,blank=True,related_name='owned_problem_set')
     done_by = models.ManyToManyField(Member,blank=True)
 
+    def unresolved_flags(self):
+        return self.problemflag_set.filter(resolved=False)
+
+    def has_unresolved_flag(self):
+        return self.unresolved_flags().count() >0
+
+
     def visible(self):
     # returns a Boolean 
         unresolved_flags = self.problemflag_set.filter(resolved=False)
