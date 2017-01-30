@@ -17,13 +17,13 @@
 <a class="btn btn-primary" href="{% url 'guide:area' area.id %}">All problems in this area</a>
 
 <p>
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#commentsModal" >Recently comments ({{ recently_discussed | length }})</button>
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#commentsModal" >Recent comments ({{ recently_discussed | length }})</button>
 <div class="modal fade" id="commentsModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Recent commented problems</h4>
+                <h4 class="modal-title">Recently commented problems</h4>
             </div>
             <div class="modal-body">
                 <p>
