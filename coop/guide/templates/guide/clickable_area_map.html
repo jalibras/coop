@@ -27,9 +27,9 @@
             </div>
             <div class="modal-body">
                 <p>
-                {% for problem in recently_discussed %}
+                {% for pc in problems_with_last_comment %}
                 <p>
-                <a href="{% url 'guide:problem' problem.id %}">Problem {{problem.id}}</a>
+                <a href="{% url 'guide:problem' pc.0.id %}">Problem {{pc.0.id}}</a> Most recent by {{pc.1.member.user.first_name}}
                 </p>
                 {% endfor %}
 

@@ -110,10 +110,12 @@ def sector(request,sectorid=1):
 
 def area_map(request,area_id):
     recent_comments = Comment.objects.filter(problem__area=area_id,created__gte=timezone.now()-timezone.timedelta(days=7))
-    recently_discussed = set([c.problem for c in recent_comments])
+    recently_discussed = list(set([c.problem for c in recent_comments]))
+    problems_with_last_comment = [ [p, p.comment_set.all()[0]] for p in recently_discussed]
     area = Area.objects.get(id = area_id)
     return render(request,'guide/clickable_area_map.html',{
         'recently_discussed':recently_discussed,
+        'problems_with_last_comment':problems_with_last_comment,
         'area':area,
         })
 
