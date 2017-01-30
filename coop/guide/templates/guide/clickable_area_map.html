@@ -17,7 +17,7 @@
 <a class="btn btn-primary" href="{% url 'guide:area' area.id %}">All problems in this area</a>
 
 <p>
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#commentsModal" >Recent comments ({{ recently_discussed | length }})</button>
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#commentsModal" >Recent comments ({{ most_recent_comments | length }})</button>
 <div class="modal fade" id="commentsModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -27,9 +27,9 @@
             </div>
             <div class="modal-body">
                 <p>
-                {% for pc in problems_with_last_comment %}
+                {% for c in most_recent_comments %}
                 <p>
-                <a href="{% url 'guide:problem' pc.0.id %}">Problem {{pc.0.id}}</a> Most recent by {{pc.1.member.user.first_name}}
+                <a href="{% url 'guide:problem' c.problem.id %}">Problem {{c.problem.id}}: {{c.member.user.first_name}} commented {{c.created | timesince }} ago</a> 
                 </p>
                 {% endfor %}
 
