@@ -62,23 +62,33 @@ class BaseProblem(models.Model,PermissionMixin):
     owner=models.ForeignKey(Member,null=True,blank=True,related_name='owned_problem_set')
     done_by = models.ManyToManyField(Member,blank=True)
 
+    # all the logic to determine whether or not a problem should be visible
+    # need to extend this to include a user argument. For example, some problems
+    # should be visible to admins or to problems owners but no one else
+    def visible(self):
+    # returns a Boolean 
+        unresolved_flags = self.problemflag_set.filter(resolved=False)
+        result =  unresolved_flags.count()==0 and self.exists and self.approved
+        return result
+
+    def __str__(self):
+        return str(self.id)
+
+    # some helpers to make the admin more functional
+
+    # methods that are used in the admin to help filter by problems
+    # that have an enresolved flag
     def unresolved_flags(self):
         return self.problemflag_set.filter(resolved=False)
 
     def has_unresolved_flag(self):
         return self.unresolved_flags().count() >0
 
-
-    def visible(self):
-    # returns a Boolean 
-        unresolved_flags = self.problemflag_set.filter(resolved=False)
-        return unresolved_flags.count()==0 and self.exists and self.approved
-
-
-    def __str__(self):
-        return str(self.id)
-# methods for embedding media in the admin
-# for the site this stuff should be in the templates
+    # methods for embedding media in the admin
+    # for the site this stuff should be in the templates
+    
+    # this returns a safe html fragment that can be used to display an image
+    # in the admin change page
     def pictures(self):
         pic_list = self.problemimage_set.all()
         if len(pic_list)==0:
@@ -157,9 +167,12 @@ class ProblemImage(models.Model,PermissionMixin):
 
 
 class Comment(models.Model,PermissionMixin):
+    class Meta:
+        ordering = ('-created',)
     text = models.TextField()
     problem = models.ForeignKey(BaseProblem,null=True,blank=True)
     member = models.ForeignKey(Member,null=True,blank=True)
+    created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.text
