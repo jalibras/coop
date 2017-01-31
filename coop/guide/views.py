@@ -8,6 +8,10 @@ from django.utils.html import mark_safe,format_html
 from django.utils import timezone
 
 
+# testing generic views 
+from django.views.generic import ListView
+
+
 from rest_framework import viewsets
 #from rest_framework.filters import SearchFilter
 
@@ -22,7 +26,6 @@ from members.models import User
 
 # import for class based views
 
-from django.views.generic import ListView
 
 
 # Create your views here.
@@ -36,7 +39,18 @@ def permission(*args,**kwargs):
 
 
 class ArtificialProblemList(ListView):
+
+    def __init__(self,*args,**kwargs):
+        self.column_list = kwargs.pop('column_list',['id','description','date'])
+        context = super(ArtificialProblemList,self).__init__(*args,**kwargs)
+
     model = ArtificialProblem
+    template_name="guide/new_problem_list.html"
+
+    def get_context_data(self,**kwargs):
+        context = super(ArtificialProblemList,self).get_context_data(**kwargs)
+        context['column_list']=self.column_list
+        return context
 
 
     def get_queryset(self,*args,**kwargs):

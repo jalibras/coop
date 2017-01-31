@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% load problem_list %}
+
+{% comment %}
+
+context should provide 
+object_list - a queryset object
+column_list - ordered list of columns to display
+ordering - uses the syntax of django admin ordering -  columns id by number and - for 
+
+{% endcomment %}
+
+{% block main %}
+
+{% block problemlist %}
+
+<table>
+    <thead>
+
+    </thead>
+
+{% for object in object_list %}
+    <tr>
+        {% for col in column_list %}
+        <td> {{ object | list_display:col }} </td>
+        {% endfor %}
+    </tr>
+{% endfor %}
+</table>
+
+{% endblock %}
+
+{% endblock %}
