@@ -14,9 +14,7 @@
 
 <h3>{{area.name}}</h3>
 <p>
-<a class="btn btn-primary" href="{% url 'guide:area' area.id %}">All problems in this area</a>
-
-<p>
+<a class="btn btn-primary btn-lg" href="{% url 'guide:area' area.id %}">All problems in this area</a>
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#commentsModal" >Recent comments ({{ most_recent_comments | length }})</button>
 <div class="modal fade" id="commentsModal" role="dialog">
     <div class="modal-dialog">
@@ -43,13 +41,11 @@
     </div>
 </div>
 
-</div>
 
 
 
 
 
-<p>
 {{area.description}}
 
 
