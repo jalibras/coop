@@ -10,7 +10,7 @@ def list_display(value,arg):
         return "NONE"
     else:
         if isinstance(getattr(value,arg),(datetime.date,datetime.datetime)):
-            return 'A date or a time goes here'
+            return str(getattr(value,arg))
         else:
             return str(getattr(value,arg))
 

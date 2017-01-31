@@ -42,7 +42,8 @@ class ArtificialProblemList(ListView):
 
     def __init__(self,*args,**kwargs):
         self.column_list = kwargs.pop('column_list',['id','description','date'])
-        context = super(ArtificialProblemList,self).__init__(*args,**kwargs)
+        self.ordering= kwargs.pop('ordering','')
+        super(ArtificialProblemList,self).__init__(*args,**kwargs)
 
     model = ArtificialProblem
     template_name="guide/new_problem_list.html"
@@ -50,6 +51,7 @@ class ArtificialProblemList(ListView):
     def get_context_data(self,**kwargs):
         context = super(ArtificialProblemList,self).get_context_data(**kwargs)
         context['column_list']=self.column_list
+        context['ordering']=self.ordering
         return context
 
 
