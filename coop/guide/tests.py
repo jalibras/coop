@@ -22,7 +22,7 @@ class ProblemViewsTest(TestCase):
     def setUp(self,*args,**kwargs):
         user = User.objects.create_user('temp@gmail.com','temp@gmail.com','temp1234')
         member = Member.objects.create(user=user)
-        super(ProblemViewTest,self).setUp(*args,**kwargs)
+        super(ProblemViewsTest,self).setUp(*args,**kwargs)
 
     def test_problem_view_returns_200_all_problems(self):
         problems = BaseProblem.objects.all()
@@ -90,7 +90,7 @@ class AreaViewsTest(TestCase):
     def setUp(self,*args,**kwargs):
         user = User.objects.create_user('temp@gmail.com','temp@gmail.com','temp1234')
         member = Member.objects.create(user=user)
-        super(AreaTest,self).setUp(*args,**kwargs)
+        super(AreaViewsTest,self).setUp(*args,**kwargs)
 
     def test_area_view_returns_200_all_areas(self):
         areas = Area.objects.all()
