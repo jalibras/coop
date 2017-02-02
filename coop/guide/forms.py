@@ -37,9 +37,8 @@ class AddArtificialProblemForm(ModelForm):
 
     class Meta:
         model = ArtificialProblem
-        exclude = ['exists','owner','approved','done_by']
+        exclude = ['exists','setter','approved','done_by']
         widgets = {
-                #'sector':forms.Select(choices=(('a','a'),)),
                 'description':forms.Textarea(attrs={
                     'placeholder':'A brief description of the problem. e.g. Dark blue with yellow tape, sit start, no arete, match on the last hold'}),
                 'date':forms.TextInput(attrs={

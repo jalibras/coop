@@ -58,7 +58,11 @@
     <dt>Date</dt>
     <dd>{{problem.artificialproblem.date}}</dd>
     <dt>Setter</dt>
-    <dd>{{problem.artificialproblem.setter}}</dd>
+    {% if problem.owner.user.first_name == "admin" %}
+    <dd>Unknown</dd>
+    {% else %}
+    <dd>{{problem.artificialproblem.owner.user.first_name }} {{problem.artificialproblem.owner.user.last_name }}</dd>
+    {% endif %}
 </dl>
 {% elif problem.naturalproblem %}
 <dl>
