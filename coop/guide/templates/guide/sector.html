@@ -8,7 +8,7 @@
 
     <h3>{{area.name}}: {{sector.name}}</h3>
     <a class="btn btn-primary" id="info-button" href ="{% url 'guide:area_map' area.id %}">Area info and map</a>
-    <a href="{% url "guide:submit" area.area_type %}?area={{area.id}}&sector={{sector.id}}&setter={{request.user.first_name}} {{request.user.last_name}}&date={% now "Y-m-d" %}" class="btn btn-primary" role="button">Submit a new problem for this sector</a>
+    <a href="{% url "guide:submit" area.area_type %}?area={{area.id}}&sector={{sector.id}}&set_by={{request.user.member.id}}&date={% now "Y-m-d" %}" class="btn btn-primary" role="button">Submit a new problem for this sector</a>
     
 
 

@@ -57,11 +57,11 @@
     <dd>{{problem.grade}}</dd>
     <dt>Date</dt>
     <dd>{{problem.artificialproblem.date}}</dd>
-    <dt>Setter</dt>
-    {% if problem.owner.user.first_name == "admin" %}
-    <dd>Unknown</dd>
+    <dt>Set by</dt>
+    {% if problem.artificialproblem.set_by %}
+    <dd>{{problem.artificialproblem.set_by.user.first_name }} {{problem.artificialproblem.set_by.user.last_name }}</dd>
     {% else %}
-    <dd>{{problem.artificialproblem.owner.user.first_name }} {{problem.artificialproblem.owner.user.last_name }}</dd>
+    <dd>Unknown</dd>
     {% endif %}
 </dl>
 {% elif problem.naturalproblem %}
