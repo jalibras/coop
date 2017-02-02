@@ -132,6 +132,7 @@ class ArtificialProblem(BaseProblem):
             )
     holds=models.CharField(max_length=300,null=True,blank=True,verbose_name='hold colour',choices=HOLDS_CHOICES)
     setter=models.CharField(max_length=300,null=True,blank=True)
+    set_by = models.ForeignKey(Member,null=True,blank=True)
 
 class NaturalProblem(BaseProblem):
     name=models.CharField(max_length=300,null=True,blank=True)
