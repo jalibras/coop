@@ -37,9 +37,8 @@ def permission(*args,**kwargs):
     return True
 
 
-
+# generic views - plan to migrate to these eventually
 class ArtificialProblemList(ListView):
-
     def __init__(self,*args,**kwargs):
         self.column_list = kwargs.pop('column_list',['id','description','date'])
         self.ordering= kwargs.pop('ordering','')
@@ -64,8 +63,6 @@ class ArtificialProblemList(ListView):
 
         return qs
 
-    #def get_context_data(self,**kwargs):
-    #    context = super(ArtificialAreaView,self).get_context_data(**kwargs)
 
 
 
@@ -135,18 +132,13 @@ def area_map(request,area_id):
         })
 
 
-#def clickable_area_map(request,area_id):
-#    area = Area.objects.get(id = area_id)
-#    return render(request,'guide/clickable_area_map.html',{
-#        'area':area,
-#        })
 
 @user_passes_test(lambda u:hasattr(u,'member'))
 def submitproblem(request,**kwargs):
 
-# if kwargs has problem_id then we are updating existing and we 
-# infer the problem_type from that. If it does not have 
-# problem_id then it must have problem_type 
+    # if kwargs has problem_id then we are updating existing and we 
+    # infer the problem_type from that. If it does not have 
+    # problem_id then it must have problem_type 
 
     if 'problem_id' in kwargs: # then we are updating an existing
         base_instance = BaseProblem.objects.get(id=kwargs.pop('problem_id'))

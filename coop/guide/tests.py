@@ -15,7 +15,7 @@ import random
 
 # view tests
 
-class ProblemViewTest(TestCase):
+class ProblemViewsTest(TestCase):
 
     fixtures = ['guide.json']
 
@@ -24,22 +24,24 @@ class ProblemViewTest(TestCase):
         member = Member.objects.create(user=user)
         super(ProblemViewTest,self).setUp(*args,**kwargs)
 
-    def test_problem_view_returns_200(self):
+    def test_problem_view_returns_200_all_problems(self):
         problems = BaseProblem.objects.all()
-        test_id = problems[0].id
-        response = self.client.get(reverse('guide:problem', args=[test_id]))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response,'Problem')
+        for p in problems:
+            response = self.client.get(reverse('guide:problem', args=[p.id]))
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response,'Problem')
+
 
     def test_invalid_problem_id_returns_404(self):
-        c = 2*BaseProblem.objects.all().count()
-        p = BaseProblem.objects.filter(id=c)
-        while len(p) > 0:
-            c = 2*c
-            p = BaseProblem.objects.filter(id=c)
+        c = max([p.id for p in BaseProblem.objects.all()])+1
         response = self.client.get(reverse('guide:problem', args=[c]))
         self.assertEqual(response.status_code, 404)
-        
+    
+    def test_logged_in_member_has_done_toggle_button(self):
+        self.client.login(username='temp@gmail.com',password='temp1234')
+        prob = BaseProblem.objects.all()[0]
+        response = self.client.get(reverse('guide:problem',args=[prob.id]))
+        self.assertContains(response,'status-element')
 
 
     def test_artificial_problem_view_has_setter_field_but_no_firs_ascensionist(self):
@@ -76,6 +78,28 @@ class ProblemViewTest(TestCase):
         p = ArtificialProblem.objects.get(
                 description=new_prob_data['description']
                 )
+        return
+
+
+
+
+class AreaViewsTest(TestCase):
+
+    fixtures = ['guide.json']
+
+    def setUp(self,*args,**kwargs):
+        user = User.objects.create_user('temp@gmail.com','temp@gmail.com','temp1234')
+        member = Member.objects.create(user=user)
+        super(AreaTest,self).setUp(*args,**kwargs)
+
+    def test_area_view_returns_200_all_areas(self):
+        areas = Area.objects.all()
+        for area in areas:
+            response = self.client.get(reverse('guide:area_map',args=[area.id]))
+            self.assertEqual(response.status_code,200)
+            response = self.client.get(reverse('guide:area',args=[area.id]))
+            self.assertEqual(response.status_code,200)
+
 
 
 
