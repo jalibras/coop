@@ -51,7 +51,7 @@ class AddArtificialProblemForm(ModelForm):
         cleaned_data = super(AddArtificialProblemForm,self).clean()
         holds = cleaned_data.get('holds')
         description = cleaned_data.get('description')
-        print((holds,description))
+        #print((holds,description))
         if holds==None and description=='':
             self._errors['']="You must either submit a description or pick a hold colour"
         print(self._errors)
@@ -70,13 +70,13 @@ class AddNaturalProblemForm(ModelForm):
 
     class Meta:
         model = NaturalProblem
-        exclude = ['exists','owner','approved','done_by']
+        exclude = ['exists','owner','setter','approved','done_by']
 
 
     def clean(self):
-        cleaned_data = super(AddArtificialProblemForm,self).clean()
+        cleaned_data = super(AddNaturalProblemForm,self).clean()
         description = cleaned_data.get('description')
-        print((holds,description))
+        #print((holds,description))
         if description=='':
             self._errors['']="You must submit a description"
         print(self._errors)
