@@ -34,4 +34,4 @@ possibly by a range eg find all problems in the range 6A-6C
 
 6. Implement problem upload for members (DONE)
 
-7. Add problem edit page for owners (TODO)
+7. Add problem edit page for owners
